@@ -2,6 +2,7 @@ Project codename 'Horus' provides network access to ASCOM controlled equipment
 and allows client applications to be built in a number of different languages.
 
 Some Guidelines For Contributors
+================================
 
 Contributors are expected to add code to the repository by means of a Pull Request.
 Code can be initially pushed here, to a branch other than 'master', or pushed
@@ -27,21 +28,27 @@ Versioning
 
 This subject is up for discussion.
 
-Suggested format for project version numbers:
-	Major.Minor.Build-Label
+Suggested format for build version numbers:
+	Major.Minor.Sprint.Counter-Label
 
 Example:
-	1.0.239-Beta
+	1.0.1.10-Beta
 
 Where:
-	Major - is the major version number and is incremented when new features are added
-	Minor - is the minor version and is incremented when minor changes and bugfixes are implemented.
-	Build - is the automatic build counter from TeamCity, which increments with every build.
-	        For manual builds done on developer workstations, this should be set to 0.
-	Label - An optional label or tag that provides additional information about the build.
-		This is for information only and the version may be written with or withouth the label.
-		For example, in Jira, it is often convenient to lavel versions this way, whereas
-		in TeamCity, it is easier not to.
+	Major	- is the major version number and is incremented when new features are added
+	Minor	- is the minor version and is incremented when minor changes and bugfixes are implemented.
+	Sprint	- is the sprint number being worked on as defined in the Jira/GreenHopper Agile RapidBoard
+	Counter	- is the TeamCity auto-incrementing build counter.
+	Label	- An optional label or tag that provides additional information about the build.
+
+The label is for information only and the version number can be written with or withouth the label.
+For example, when planning the roadmap in Jira, it is often convenient to label versions this way,
+whereas	in TeamCity, it is easier not to.
+
+The TeamCity build server will automatically insert the correct version number into all AssemblyVersion,
+AssemblyFileVersion and AssemblyInformationalVersion attributes during the build process. It will also label
+the sources in the Git/Stash repository each time it completes a build. Thus, any given built output can be
+easily traced back to the build that created it and the source revisions that went into making it.
 
 Developer Tools
 ===============
