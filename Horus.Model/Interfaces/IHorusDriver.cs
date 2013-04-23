@@ -6,6 +6,15 @@ using Horus.Model.Drivers;
 
 namespace Horus.Model.Interfaces
 {
+    public enum DriverConnectionPoint
+    {
+        Custom = 0,
+        ListOfCustomConnectionPoints,
+        SerialPort,
+        ParallelPort,
+        FireWite
+    }
+
 	public interface IHorusDriver
 	{
         /// <summary>
@@ -13,6 +22,8 @@ namespace Horus.Model.Interfaces
         /// </summary>
 		int Version { get; }
 
-        HorusEnabledDeviceSummary[] GetAvailableDevices();
+        DriverConnectionPoint ConnectionPointType { get; }
+
+	    HorusEnabledDeviceSummary[] GetAvailableDevices();
 	}
 }

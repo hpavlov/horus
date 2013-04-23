@@ -43,7 +43,7 @@ namespace HorusClientApp
             var localSession = new LocalHorusSession();
             HorusDeviceSummary deviceSummary = localSession.EnumDevices<ICamera>().First();
 
-            HorusCamera camera = localSession.CreateCameraInstance(deviceSummary, "SampleCameraDrivers.Camera1Driver");
+            HorusCamera camera = localSession.CreateCameraInstance(deviceSummary, "SampleCameraDrivers.Camera2Driver");
 
             MessageBox.Show(camera.Method1(0));
         }

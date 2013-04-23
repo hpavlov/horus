@@ -28,6 +28,11 @@ namespace Horus.Client.Drivers
 			}
 		}
 
+        public DriverConnectionPoint ConnectionPointType
+        {
+            get { return DriverConnectionPoint.Custom; }
+        }
+
         public HorusEnabledDeviceSummary[] GetAvailableDevices()
         {
             return driverInstance.GetAvailableDevices();

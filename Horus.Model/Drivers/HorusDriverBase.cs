@@ -15,6 +15,11 @@ namespace Horus.Model.Drivers
 			get { return GetDriverVersion(); }
 		}
 
+	    public DriverConnectionPoint ConnectionPointType
+	    {
+	        get { return DriverConnectionPoint.Custom;}
+	    }
+
 	    public abstract HorusEnabledDeviceSummary[] GetAvailableDevices();
 	}
 }
