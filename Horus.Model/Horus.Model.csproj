@@ -44,11 +44,17 @@
     <Compile Include="Drivers\HorusDeviceSummary.cs" />
     <Compile Include="Drivers\HorusDriverBase.cs" />
     <Compile Include="Drivers\HorusDriverSummary.cs" />
+    <Compile Include="Exceptions\HorusDriverException.cs" />
+    <Compile Include="Exceptions\HorusDriverNotConnectedException.cs" />
     <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Interfaces\Enums.cs" />
+    <Compile Include="Interfaces\IHorusContext.cs" />
     <Compile Include="Interfaces\IHorusDriver.cs" />
     <Compile Include="Drivers\HorusEnabledDeviceSummary.cs" />
     <Compile Include="Interfaces\ICamera.cs" />
     <Compile Include="Interfaces\ICameraV2.cs" />
+    <Compile Include="Interfaces\IVideo.cs" />
+    <Compile Include="Interfaces\IVideoFrame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\HorusDriverSummaryList.cs" />
   </ItemGroup>

@@ -5,7 +5,7 @@ using System.Text;
 using Horus.Client.System;
 using Horus.Model.Drivers;
 
-namespace Horus.ClientFrameWork.CS.System
+namespace Horus.Client.System
 {
     internal class ASCOMDriversDiscoveryService
     {

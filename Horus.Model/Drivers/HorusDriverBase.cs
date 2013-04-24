@@ -15,10 +15,11 @@ namespace Horus.Model.Drivers
 			get { return GetDriverVersion(); }
 		}
 
-	    public DriverConnectionPoint ConnectionPointType
-	    {
-	        get { return DriverConnectionPoint.Custom;}
-	    }
+        public abstract void Initialize(IHorusContext horusContext);
+
+        public abstract void LinkToDevice(string deviceName);
+
+        public abstract void SetupDialog();
 
 	    public abstract HorusEnabledDeviceSummary[] GetAvailableDevices();
 	}

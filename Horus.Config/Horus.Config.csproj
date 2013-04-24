@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigurationPersisters\FileSystemPersister.cs" />
+    <Compile Include="ConfigurationPersisters\IConfigurationPersister.cs" />
+    <Compile Include="ConfigurationPersisters\UserApplicationSettingsPersister.cs" />
     <Compile Include="HorusConfigManager.cs" />
     <Compile Include="Model\HorusDeviceConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

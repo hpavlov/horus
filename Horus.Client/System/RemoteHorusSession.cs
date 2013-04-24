@@ -8,7 +8,7 @@ using System.Text;
 using Horus.Client.Drivers;
 using Horus.Model.Drivers;
 
-namespace Horus.ClientFrameWork.CS.System
+namespace Horus.Client.System
 {
     internal class RemoteHorusSession : HorusSession
     {

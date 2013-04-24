@@ -8,7 +8,7 @@ using Horus.Client.System;
 using Horus.Model.Drivers;
 using Horus.Model.Interfaces;
 
-namespace Horus.ClientFrameWork.CS.System
+namespace Horus.Client.System
 {
     // NOTE: This implementation is pretty naive and requires serious thought and further work
     internal class LocalHorusSession : HorusSession

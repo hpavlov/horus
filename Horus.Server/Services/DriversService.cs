@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Horus.ClientFrameWork.CS.System;
+using Horus.Client.System;
 using Horus.Model.Server;
 using Horus.Server.Helpers;
 using Kayak.Framework;

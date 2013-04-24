@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using Horus.Config.ConfigurationPersisters;
 using Horus.Config.Model;
 using Horus.Config.Properties;
 using Horus.Model.Helpers;
@@ -19,9 +20,14 @@ namespace Horus.Config
 
         private object syncRoot = new object();
         private HorusDeviceConfig horusDeviceConfig;
+        private IConfigurationPersister configPersister;
 
         private HorusConfigManager()
-        { }
+        {
+            AssertHorusHomeIsConfigured();
+
+            configPersister = new FileSystemPersister(Environment.GetEnvironmentVariable(HORUS_HOME, EnvironmentVariableTarget.Machine));
+        }
 
         public void LoadConfiguration()
         {
@@ -29,7 +35,7 @@ namespace Horus.Config
             {
                 try
                 {
-                    horusDeviceConfig = Settings.Default.HorusDeviceConfig.AsDeserialized<HorusDeviceConfig>();
+                    horusDeviceConfig = configPersister.ReadConfiguration().AsDeserialized<HorusDeviceConfig>();
                 }
                 catch (Exception)
                 {
@@ -48,13 +54,12 @@ namespace Horus.Config
         }
         public void SaveConfigurationNoLocking()
         {
-            // TODO:
-            //Settings.Default.HorusDeviceConfig = horusDeviceConfig.AsSerialized();
+            configPersister.WriteConfiguration(horusDeviceConfig.AsSerialized());
         }
 
         private void AssertHorusHomeIsConfigured()
         {
-            string horusHome = Environment.GetEnvironmentVariable(HORUS_HOME);
+            string horusHome = Environment.GetEnvironmentVariable(HORUS_HOME, EnvironmentVariableTarget.Machine);
             if (string.IsNullOrEmpty(horusHome) ||
                 !Directory.Exists(horusHome))
             {
@@ -77,7 +82,7 @@ namespace Horus.Config
                     // NOTE: HORUS_HOME must have been set by the installer
                     AssertHorusHomeIsConfigured();
 
-                    string addinsPath = Path.GetFullPath(Environment.GetEnvironmentVariable(HORUS_HOME) + @"\Drivers");
+                    string addinsPath = Path.GetFullPath(Environment.GetEnvironmentVariable(HORUS_HOME, EnvironmentVariableTarget.Machine) + @"\Drivers");
 
                     if (!Directory.Exists(addinsPath))
                         Directory.CreateDirectory(addinsPath);

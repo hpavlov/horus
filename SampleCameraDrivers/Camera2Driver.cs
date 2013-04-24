@@ -28,6 +28,21 @@ namespace SampleCameraDrivers
             };
         }
 
+        public override void Initialize(IHorusContext horusContext)
+        {
+            // NOTE: This dummy demonstration doesn't use this method
+        }
+
+        public override void LinkToDevice(string deviceName)
+        {
+            // NOTE: This dummy demonstration doesn't use this method
+        }
+
+        public override void SetupDialog()
+        {
+            // NOTE: This dummy demonstration doesn't use this method
+        }
+
         public string Method1(int arg1)
         {
             return "Camera2Driver.Method1";

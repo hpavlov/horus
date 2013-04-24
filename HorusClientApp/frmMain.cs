@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Horus.Client.Drivers;
-using Horus.ClientFrameWork.CS.System;
+using Horus.Client.System;
 using Horus.Model.Drivers;
 using Horus.Model.Interfaces;
 
