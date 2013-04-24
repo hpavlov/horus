@@ -10,7 +10,7 @@ using Horus.Model.Drivers;
 
 namespace Horus.ClientFrameWork.CS.System
 {
-    public class RemoteHorusSession : HorusSession
+    internal class RemoteHorusSession : HorusSession
     {
         private string sessionId;
         private Uri horusServiceUri;
@@ -80,11 +80,6 @@ namespace Horus.ClientFrameWork.CS.System
         }
 
         public override HorusCamera CreateCameraInstance(HorusDeviceSummary deviceSummary)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override HorusCamera CreateCameraInstance(HorusDeviceSummary deviceSummary, string driverName)
         {
             throw new NotImplementedException();
         }

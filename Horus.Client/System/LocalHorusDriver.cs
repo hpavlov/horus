@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Horus.Client.System
 {
-    public class LocalHorusDriver
+    internal class LocalHorusDriver
     {
         public Type Implementor { get; private set; }
         public Assembly Assembly { get; private set; }

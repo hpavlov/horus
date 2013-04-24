@@ -9,6 +9,6 @@ namespace Horus.Model.Drivers
     {
         public string DeviceName { get; set; }
         public bool IsAvailable { get; set; }
-        public List<HorusDriverSummary> AvailableDrivers { get; set; }
+        public HorusDriverSummary DeviceDriver { get; set; }
     }
 }

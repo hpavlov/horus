@@ -9,6 +9,19 @@ namespace Horus.ClientFrameWork.CS.System
 {
     public abstract class HorusSession
     {
+        public static HorusSession CreateLocalSession()
+        {
+            return new LocalHorusSession();    
+        }
+
+        public static HorusSession CreateRemoteSession(Uri serviceUri, string userName, string password)
+        {
+            var rv = new RemoteHorusSession(serviceUri);
+            rv.Login(userName, password);
+
+            return rv;
+        }
+
         protected HorusDriverSummary[] availableDrivers = null;
 
         public abstract HorusDriverSummary[] EnumDrivers();
@@ -18,7 +31,6 @@ namespace Horus.ClientFrameWork.CS.System
         //       When a new driver interface becomes available and supported by the platform, the new methods will ne added to this HorusSession class
         public abstract HorusDriver CreateDriverInstance(HorusDriverSummary driverSummary);
         public abstract HorusCamera CreateCameraInstance(HorusDeviceSummary deviceSummary);
-        public abstract HorusCamera CreateCameraInstance(HorusDeviceSummary deviceSummary, string driverName);
 
         private void EnsureAvailableDrivers()
         {
@@ -52,6 +64,11 @@ namespace Horus.ClientFrameWork.CS.System
                 HorusEnabledDeviceSummary[] deviceSummaries =  instance.GetAvailableDevices();
                 foreach(HorusEnabledDeviceSummary device in deviceSummaries)
                 {
+                    // TODO: There will be two different questions thay will need to be answered here
+                    // (1) The Horus System enumerating all availabel devices and all drivers that can control them and
+                    // (2) The client asking for a device to control (which should be tied to the configuration of a specific device-driver pair configured by the Admin)
+                    //
+                    // This dummy implementation assumes only one driver will be available for each device
                     HorusDeviceSummary deviceSummary = rv.SingleOrDefault(x => x.DeviceName == device.DeviceName);
                     if (deviceSummary == null)
                     {
@@ -59,11 +76,10 @@ namespace Horus.ClientFrameWork.CS.System
                         {
                             DeviceName = device.DeviceName, 
                             IsAvailable = device.IsAvailable,
-                            AvailableDrivers = new List<HorusDriverSummary>()
+                            DeviceDriver = driver
                         };
                         rv.Add(deviceSummary);
                     }
-                    deviceSummary.AvailableDrivers.Add(driver);
                 }
             }
 

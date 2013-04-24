@@ -7,7 +7,7 @@ using Horus.Model.Drivers;
 
 namespace Horus.ClientFrameWork.CS.System
 {
-    public class ASCOMDriversDiscoveryService
+    internal class ASCOMDriversDiscoveryService
     {
         public static LocalHorusDriver[] DriscoverAvailableDrivers()
         {

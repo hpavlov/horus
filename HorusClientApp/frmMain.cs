@@ -26,10 +26,10 @@ namespace HorusClientApp
             //       This is just a quick example and includes all objects that need to be created and all methods that need to be called 
             //       during the lifetime of the realworld app in order to make a method call on a driver interface
 
-            var localSession = new LocalHorusSession();
-            HorusDeviceSummary deviceSummary = localSession.EnumDevices<ICamera>().First();
+            var localSession = HorusSession.CreateLocalSession();
+            HorusDeviceSummary deviceSummary = localSession.EnumDevices<ICamera>().First(x => x.DeviceName == "DummyCamera1Device");
 
-            HorusCamera camera = localSession.CreateCameraInstance(deviceSummary, "SampleCameraDrivers.Camera1Driver");
+            HorusCamera camera = localSession.CreateCameraInstance(deviceSummary);
 
             MessageBox.Show(camera.Method1(0));
         }
@@ -40,10 +40,10 @@ namespace HorusClientApp
             //       This is just a quick example and includes all objects that need to be created and all methods that need to be called 
             //       during the lifetime of the realworld app in order to make a method call on a driver interface
 
-            var localSession = new LocalHorusSession();
-            HorusDeviceSummary deviceSummary = localSession.EnumDevices<ICamera>().First();
+            var localSession = HorusSession.CreateLocalSession();
+            HorusDeviceSummary deviceSummary = localSession.EnumDevices<ICamera>().First(x => x.DeviceName == "DummyCamera2Device");
 
-            HorusCamera camera = localSession.CreateCameraInstance(deviceSummary, "SampleCameraDrivers.Camera2Driver");
+            HorusCamera camera = localSession.CreateCameraInstance(deviceSummary);
 
             MessageBox.Show(camera.Method1(0));
         }
@@ -54,12 +54,11 @@ namespace HorusClientApp
             //       This is just a quick example and includes all objects that need to be created and all methods that need to be called 
             //       during the lifetime of the realworld app in order to make a method call on a driver interface
 
-            var remoteSession = new RemoteHorusSession(new Uri(tbxEndpointV1.Text));
-            remoteSession.Login(tbxUser.Text, tbxPassword.Text);
+            var remoteSession = HorusSession.CreateRemoteSession(new Uri(tbxEndpointV1.Text), tbxUser.Text, tbxPassword.Text);
 
-            HorusDeviceSummary deviceSummary = remoteSession.EnumDevices<ICamera>().First();
+            HorusDeviceSummary deviceSummary = remoteSession.EnumDevices<ICamera>().First(x => x.DeviceName == "DummyCamera1Device");
 
-            HorusCamera camera = remoteSession.CreateCameraInstance(deviceSummary, "SampleCameraDrivers.Camera1Driver");
+            HorusCamera camera = remoteSession.CreateCameraInstance(deviceSummary);
 
             MessageBox.Show(camera.Method1(0));
         }

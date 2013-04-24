@@ -5,14 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C8FA1899-1BEB-454F-A30D-21341AC5B52B}</ProjectGuid>
+    <ProjectGuid>{854F0B23-EEB8-49B8-9218-B0E86CA132D4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Horus.Model</RootNamespace>
-    <AssemblyName>Horus.Model</AssemblyName>
+    <RootNamespace>Horus.Config</RootNamespace>
+    <AssemblyName>Horus.Config</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,19 +40,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Drivers\HorusDeviceSummary.cs" />
-    <Compile Include="Drivers\HorusDriverBase.cs" />
-    <Compile Include="Drivers\HorusDriverSummary.cs" />
-    <Compile Include="Helpers\Extensions.cs" />
-    <Compile Include="Interfaces\IHorusDriver.cs" />
-    <Compile Include="Drivers\HorusEnabledDeviceSummary.cs" />
-    <Compile Include="Interfaces\ICamera.cs" />
-    <Compile Include="Interfaces\ICameraV2.cs" />
+    <Compile Include="HorusConfigManager.cs" />
+    <Compile Include="Model\HorusDeviceConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server\HorusDriverSummaryList.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Horus.Model\Horus.Model.csproj">
+      <Project>{C8FA1899-1BEB-454F-A30D-21341AC5B52B}</Project>
+      <Name>Horus.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

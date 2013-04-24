@@ -10,7 +10,7 @@ using SampleCameraDrivers;
 
 namespace Horus.ClientFrameWork.CS.System
 {
-    public class NativeHorusDriversDriscoveryService
+    internal class NativeHorusDriversDriscoveryService
     {
         public static LocalHorusDriver[] DriscoverAvailableDrivers()
         {

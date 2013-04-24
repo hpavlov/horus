@@ -15,7 +15,7 @@ namespace Horus.Server.Services
         [Verb("GET")]
         public void ListRegisteredDrivers(string sessionId)
         {
-            var session = new LocalHorusSession();
+            var session = HorusSession.CreateLocalSession();
 
             XmlResponse(new HorusDriverSummaryList());
         }

@@ -22,7 +22,7 @@ namespace SampleCameraDrivers
             {
                 new HorusEnabledDeviceSummary()
                     {
-                        DeviceName = "DummyCameraDevice",
+                        DeviceName = "DummyCamera2Device",
                         IsAvailable = true
                     }
             };

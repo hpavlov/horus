@@ -11,7 +11,7 @@ using Horus.Model.Interfaces;
 namespace Horus.ClientFrameWork.CS.System
 {
     // NOTE: This implementation is pretty naive and requires serious thought and further work
-    public class LocalHorusSession : HorusSession
+    internal class LocalHorusSession : HorusSession
     {
         private List<LocalHorusDriver> allLocalDrivers = null;
 
@@ -76,17 +76,7 @@ namespace Horus.ClientFrameWork.CS.System
         {
             EnsureLocalDrivers();
 
-            throw new NotImplementedException();
-        }
-
-        public override HorusCamera CreateCameraInstance(HorusDeviceSummary deviceSummary, string driverName)
-        {
-            if (!deviceSummary.AvailableDrivers.Exists(x => x.DriverName == driverName))
-                throw new ArgumentException("The specified driver cannot connect to the specified device.");
-
-            EnsureLocalDrivers();
-
-            LocalHorusDriver localDriver = allLocalDrivers.SingleOrDefault(x => x.Implementor.FullName == driverName);
+            LocalHorusDriver localDriver = allLocalDrivers.SingleOrDefault(x => x.Implementor.FullName == deviceSummary.DeviceDriver.DriverName);
 
             if (localDriver != null)
             {
