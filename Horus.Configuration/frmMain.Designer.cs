@@ -28,24 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabDrivers = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.lbDrivers = new System.Windows.Forms.ListBox();
             this.tabDevices = new System.Windows.Forms.TabPage();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.btnConfigureDevice = new System.Windows.Forms.Button();
+            this.lbDevices = new System.Windows.Forms.ListBox();
             this.btnFindDevices = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabDrivers.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabDevices.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +61,6 @@
             // tabDrivers
             // 
             this.tabDrivers.Controls.Add(this.groupBox2);
-            this.tabDrivers.Controls.Add(this.button3);
             this.tabDrivers.Controls.Add(this.groupBox1);
             this.tabDrivers.Controls.Add(this.lbDrivers);
             this.tabDrivers.Location = new System.Drawing.Point(4, 22);
@@ -76,28 +73,29 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Location = new System.Drawing.Point(299, 14);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(269, 87);
+            this.groupBox2.Size = new System.Drawing.Size(269, 142);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Driver Info";
             // 
-            // button3
+            // label2
             // 
-            this.button3.Location = new System.Drawing.Point(413, 281);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(155, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Configure Driver";
-            this.button3.UseVisualStyleBackColor = true;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(111, 64);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "TODO";
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Location = new System.Drawing.Point(299, 107);
+            this.groupBox1.Location = new System.Drawing.Point(299, 162);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(269, 155);
             this.groupBox1.TabIndex = 1;
@@ -106,11 +104,12 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(12, 19);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(54, 49);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(247, 100);
+            this.label1.Size = new System.Drawing.Size(160, 39);
             this.label1.TabIndex = 4;
-            this.label1.Text = resources.GetString("label1.Text");
+            this.label1.Text = "TODO\r\n\r\nNOTE: May not be needed at all\r\n";
             // 
             // button2
             // 
@@ -140,53 +139,34 @@
             // 
             // tabDevices
             // 
-            this.tabDevices.Controls.Add(this.button7);
-            this.tabDevices.Controls.Add(this.button6);
-            this.tabDevices.Controls.Add(this.button5);
-            this.tabDevices.Controls.Add(this.listBox2);
+            this.tabDevices.Controls.Add(this.btnConfigureDevice);
+            this.tabDevices.Controls.Add(this.lbDevices);
             this.tabDevices.Controls.Add(this.btnFindDevices);
             this.tabDevices.Location = new System.Drawing.Point(4, 22);
             this.tabDevices.Name = "tabDevices";
             this.tabDevices.Padding = new System.Windows.Forms.Padding(3);
             this.tabDevices.Size = new System.Drawing.Size(585, 363);
             this.tabDevices.TabIndex = 1;
-            this.tabDevices.Text = "Attached Devices";
+            this.tabDevices.Text = "Logical Devices";
             this.tabDevices.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // btnConfigureDevice
             // 
-            this.button7.Location = new System.Drawing.Point(361, 209);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(133, 23);
-            this.button7.TabIndex = 7;
-            this.button7.Text = "Configure Device";
-            this.button7.UseVisualStyleBackColor = true;
+            this.btnConfigureDevice.Location = new System.Drawing.Point(247, 15);
+            this.btnConfigureDevice.Name = "btnConfigureDevice";
+            this.btnConfigureDevice.Size = new System.Drawing.Size(133, 23);
+            this.btnConfigureDevice.TabIndex = 7;
+            this.btnConfigureDevice.Text = "Configure Device";
+            this.btnConfigureDevice.UseVisualStyleBackColor = true;
+            this.btnConfigureDevice.Click += new System.EventHandler(this.btnConfigureDevice_Click);
             // 
-            // button6
+            // lbDevices
             // 
-            this.button6.Location = new System.Drawing.Point(361, 97);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(133, 23);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "Remove from List";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(361, 59);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(133, 23);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "Add Non Discoverable";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(17, 59);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(330, 173);
-            this.listBox2.TabIndex = 4;
+            this.lbDevices.FormattingEnabled = true;
+            this.lbDevices.Location = new System.Drawing.Point(17, 59);
+            this.lbDevices.Name = "lbDevices";
+            this.lbDevices.Size = new System.Drawing.Size(363, 173);
+            this.lbDevices.TabIndex = 4;
             // 
             // btnFindDevices
             // 
@@ -194,7 +174,7 @@
             this.btnFindDevices.Name = "btnFindDevices";
             this.btnFindDevices.Size = new System.Drawing.Size(181, 23);
             this.btnFindDevices.TabIndex = 3;
-            this.btnFindDevices.Text = "Discover Attached Devices";
+            this.btnFindDevices.Text = "Search for Attached Devices";
             this.btnFindDevices.UseVisualStyleBackColor = true;
             this.btnFindDevices.Click += new System.EventHandler(this.btnFindDevices_Click);
             // 
@@ -209,7 +189,10 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabDrivers.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tabDevices.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -224,14 +207,12 @@
         private System.Windows.Forms.ListBox lbDrivers;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnFindDevices;
-        private System.Windows.Forms.ListBox listBox2;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnConfigureDevice;
+        private System.Windows.Forms.Label label2;
+        protected internal System.Windows.Forms.ListBox lbDevices;
     }
 }
 

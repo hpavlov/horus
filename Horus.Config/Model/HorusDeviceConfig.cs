@@ -25,7 +25,7 @@ namespace Horus.Config.Model
 
     public class DeviceConfig
     {
-        public string DeviceId { get; set; }
+        public string DeviceName { get; set; }
         public string DriverId { get; set; }
 
         public XmlNode DriverDeviceData;

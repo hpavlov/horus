@@ -24,6 +24,11 @@ namespace Horus.Client.Drivers
             this.driverInstance = driverInterfaceInstance;
 		}
 
+        public Type DriverType
+        {
+            get { return driverInstance.GetType(); }
+        }
+
 		public int Version
 		{
 			get
