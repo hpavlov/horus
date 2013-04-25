@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Horus.Model.Interfaces
-{
-    public enum SensorType
     {
+    public enum SensorType
+        {
         // Summary:
         //     Camera produces monochrome array with no Bayer encoding
         Monochrome = 0,
@@ -30,10 +31,10 @@ namespace Horus.Model.Interfaces
         // Summary:
         //     Camera produces Kodak TRUESENSE Bayer LRGB array images
         LRGB = 5,
-    }
+        }
 
     public enum VideoCameraFrameRate
-    {
+        {
         // Summary:
         //     This is a video camera that supports variable frame rates
         Variable = 0,
@@ -51,10 +52,10 @@ namespace Horus.Model.Interfaces
         //     29.97 frames per second (fps) corresponding to an NTSC (colour) or EIAb>
         //     (black and white) video standard
         NTSC = 2,
-    }
+        }
 
     public enum VideoCameraState
-    {
+        {
         // Summary:
         //     Camera status idle. The video camera expecting commands
         videoCameraIdle = 0,
@@ -74,5 +75,38 @@ namespace Horus.Model.Interfaces
         //     continue its operation. Usually a restart will be required to resolve the
         //     error condition
         videoCameraError = 3,
+        }
+
+
+    /// <summary>
+    ///  Dome shutter status values.
+    /// </summary>
+    public enum DomeShutterState
+        {
+        // 8915DF3D-B055-4195-8D23-AAD7F58FDF3B
+        /// <summary>
+        /// Dome shutter status open
+        /// </summary>
+        shutterOpen = 0,
+
+        /// <summary>
+        /// Dome shutter status closed
+        /// </summary>
+        shutterClosed = 1,
+
+        /// <summary>
+        /// Dome shutter status opening
+        /// </summary>
+        shutterOpening = 2,
+
+        /// <summary>
+        /// Dome shutter status closing
+        /// </summary>
+        shutterClosing = 3,
+
+        /// <summary>
+        /// Dome shutter status error
+        /// </summary>
+        shutterError = 4
+        }
     }
-}
