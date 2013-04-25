@@ -7,7 +7,7 @@ namespace Horus.Model.Interfaces
 {
     public interface IHorusContext
     {
-        object ReadDriverSettings(Type driverSettings, Type driver, string deviceId);
+        TSettings ReadDriverSettings<TSettings>(Type driver, string deviceId) where TSettings : new();
         void WriteDriverSettings(object settings, Type driver, string deviceId);
     }
 }

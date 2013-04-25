@@ -117,7 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Devices will need to be connected by standard ports such as: COM, LPT, FireWire etc or could provide a list of connection ports (such as the list of the names of Video Grabbing Devies attached) or could use a completely custom connection configuraiton. We show config params here *if* we can (we should most of the time?)</value>
-  </data>
 </root>

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DeviceController.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +55,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DeviceModel.cs" />
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,11 +84,16 @@
       <Project>{ECC64F7D-CB49-4865-BA8E-E3E6A2B0082D}</Project>
       <Name>Horus.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Horus.Config\Horus.Config.csproj">
+      <Project>{854F0B23-EEB8-49B8-9218-B0E86CA132D4}</Project>
+      <Name>Horus.Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Horus.Model\Horus.Model.csproj">
       <Project>{C8FA1899-1BEB-454F-A30D-21341AC5B52B}</Project>
       <Name>Horus.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

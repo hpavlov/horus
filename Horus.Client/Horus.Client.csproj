@@ -44,8 +44,9 @@
     <Compile Include="Drivers\HorusCamera.cs" />
     <Compile Include="Drivers\HorusDriver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System\AppDomain\DriverAppDomainManager.cs" />
+    <Compile Include="System\AppDomains\DriverAppDomainManager.cs" />
     <Compile Include="System\ASCOMDriversDiscoveryService.cs" />
+    <Compile Include="System\HorusContext.cs" />
     <Compile Include="System\HorusSession.cs" />
     <Compile Include="System\LocalHorusDriver.cs" />
     <Compile Include="System\LocalHorusSession.cs" />
@@ -53,6 +54,10 @@
     <Compile Include="System\RemoteHorusSession.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Horus.Config\Horus.Config.csproj">
+      <Project>{854F0B23-EEB8-49B8-9218-B0E86CA132D4}</Project>
+      <Name>Horus.Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Horus.Model\Horus.Model.csproj">
       <Project>{C8FA1899-1BEB-454F-A30D-21341AC5B52B}</Project>
       <Name>Horus.Model</Name>

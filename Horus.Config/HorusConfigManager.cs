@@ -73,6 +73,57 @@ namespace Horus.Config
                 LoadConfiguration();
         }
 
+        public bool IsLogicalDeviceConfigured(Type driverType, string deviceName)
+        {
+            lock (syncRoot)
+            {
+                DriverConfig driverConfig = GetDriverConfigNoLocking(driverType);
+                if (driverConfig == null)
+                    return false;
+
+                return horusDeviceConfig.Devices.Exists(x =>
+                    string.Equals(x.DeviceName, deviceName, StringComparison.InvariantCultureIgnoreCase) &&
+                    string.Equals(x.DriverId, driverConfig.DriverId, StringComparison.InvariantCultureIgnoreCase));
+            }
+        }
+
+        public DeviceConfig GetLogicalDeviceConfiguration(Type driverType, string deviceName)
+        {
+            lock (syncRoot)
+            {
+                DriverConfig driverConfig = EnsureDriverConfigNoLocking(driverType);
+
+                return horusDeviceConfig.Devices.SingleOrDefault(x =>
+                    string.Equals(x.DeviceName, deviceName, StringComparison.InvariantCultureIgnoreCase) &&
+                    string.Equals(x.DriverId, driverConfig.DriverId, StringComparison.InvariantCultureIgnoreCase));
+            }
+        }
+
+        public DeviceConfig RegisterLogicalDeviceConfiguration(Type driverType, string deviceName)
+        {
+            lock (syncRoot)
+            {
+                DriverConfig driverConfig = EnsureDriverConfigNoLocking(driverType);
+
+                DeviceConfig rv = horusDeviceConfig.Devices.SingleOrDefault(x =>
+                    string.Equals(x.DeviceName, deviceName, StringComparison.InvariantCultureIgnoreCase) &&
+                    string.Equals(x.DriverId, driverConfig.DriverId, StringComparison.InvariantCultureIgnoreCase));
+
+                if (rv == null)
+                {
+                    rv = new DeviceConfig()
+                    {
+                        DeviceName = deviceName,
+                        DriverId = driverConfig.DriverId
+                    };
+
+                    horusDeviceConfig.Devices.Add(rv);
+                }
+
+                return rv;
+            }
+        }
+
         public string DriverAddinsPath
         {
             get
@@ -92,18 +143,14 @@ namespace Horus.Config
             }
         }
 
-        public TDriverConfig GetDeviceDriverData<TDriverConfig>(Type driver, string deviceId) where TDriverConfig : new()
+        public TDriverConfig GetDeviceDriverData<TDriverConfig>(Type driver, string deviceName) where TDriverConfig : new()
         {
             lock (syncRoot)
             {
                 EnsureDeviceConfig();
                 bool hasPendingChanges = false;
 
-                DriverConfig driverConfig = horusDeviceConfig
-                    .Drivers
-                    .SingleOrDefault(x =>
-                        string.Compare(x.DriverAssemblyName, driver.Assembly.FullName, StringComparison.InvariantCultureIgnoreCase) == 0 &&
-                        string.Compare(x.DriverTypeName, driver.FullName, StringComparison.InvariantCultureIgnoreCase) == 0);
+                DriverConfig driverConfig = GetDriverConfigNoLocking(driver);
 
                 if (driverConfig == null)
                 {
@@ -119,18 +166,18 @@ namespace Horus.Config
 
                 DeviceConfig deviceConfig = horusDeviceConfig.Devices
                         .SingleOrDefault(x =>
-                            string.Compare(x.DeviceId, deviceId, StringComparison.InvariantCultureIgnoreCase) == 0 &&
+                            string.Compare(x.DeviceName, deviceName, StringComparison.InvariantCultureIgnoreCase) == 0 &&
                             string.Compare(x.DriverId, driverConfig.DriverId, StringComparison.InvariantCultureIgnoreCase) == 0);
 
                 if (deviceConfig == null)
                 {
                     deviceConfig = new DeviceConfig()
                     {
-                        DeviceId = Guid.NewGuid().ToString(),   
+                        DeviceName = deviceName,   
                         DriverId = driverConfig.DriverId,
                         DriverDeviceData = new TDriverConfig().AsSerializedNode()
                     };
-                    horusDeviceConfig.Drivers.Add(driverConfig);
+                    horusDeviceConfig.Devices.Add(deviceConfig);
                     hasPendingChanges = true;                    
                 }
 
@@ -140,6 +187,68 @@ namespace Horus.Config
                 }
 
                 return deviceConfig.DriverDeviceData.OuterXml.AsDeserialized<TDriverConfig>();
+            }
+        }
+
+        private DriverConfig GetDriverConfigNoLocking(Type driver)
+        {
+            return horusDeviceConfig
+                    .Drivers
+                    .SingleOrDefault(x =>
+                        string.Compare(x.DriverAssemblyName, driver.Assembly.FullName, StringComparison.InvariantCultureIgnoreCase) == 0 &&
+                        string.Compare(x.DriverTypeName, driver.FullName, StringComparison.InvariantCultureIgnoreCase) == 0);
+        }
+
+        private DriverConfig EnsureDriverConfigNoLocking(Type driver)
+        {
+            DriverConfig driverConfig = horusDeviceConfig
+                    .Drivers
+                    .SingleOrDefault(x =>
+                        string.Compare(x.DriverAssemblyName, driver.Assembly.FullName, StringComparison.InvariantCultureIgnoreCase) == 0 &&
+                        string.Compare(x.DriverTypeName, driver.FullName, StringComparison.InvariantCultureIgnoreCase) == 0);
+
+            if (driverConfig == null)
+            {
+                driverConfig = new DriverConfig()
+                {
+                    DriverId = Guid.NewGuid().ToString(),
+                    DriverAssemblyName = driver.Assembly.FullName,
+                    DriverTypeName = driver.FullName
+                };
+                horusDeviceConfig.Drivers.Add(driverConfig);
+                SaveConfigurationNoLocking();
+            }
+
+            return driverConfig;
+        }
+
+        public void SetDeviceDriverData(object settings, Type driver, string deviceName)
+        {
+            lock (syncRoot)
+            {
+                EnsureDeviceConfig();
+
+                DriverConfig driverConfig = EnsureDriverConfigNoLocking(driver);
+
+                DeviceConfig deviceConfig = horusDeviceConfig.Devices
+                        .SingleOrDefault(x =>
+                            string.Compare(x.DeviceName, deviceName, StringComparison.InvariantCultureIgnoreCase) == 0 &&
+                            string.Compare(x.DriverId, driverConfig.DriverId, StringComparison.InvariantCultureIgnoreCase) == 0);
+
+                if (deviceConfig == null)
+                {
+                    deviceConfig = new DeviceConfig()
+                    {
+                        DeviceName = deviceName,
+                        DriverId = driverConfig.DriverId,
+                        DriverDeviceData = settings.AsSerializedNode()
+                    };
+                    horusDeviceConfig.Devices.Add(deviceConfig);
+                }
+                else
+                    deviceConfig.DriverDeviceData = settings.AsSerializedNode();
+
+                SaveConfigurationNoLocking();
             }
         }
     }

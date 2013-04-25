@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Horus.Client.System.AppDomain
+namespace Horus.Client.System.AppDomains
 {
     public class DriverAppDomainManager
     {

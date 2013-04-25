@@ -27,8 +27,14 @@ namespace Horus.Client.System
 
         private TInterface CreateDriverInstance<TInterface>(LocalHorusDriver localDriver) where TInterface : class
         {
-            ObjectHandle newInstanceHandle = Activator.CreateInstance(localDriver.Assembly.GetName().FullName, localDriver.Implementor.FullName);
-            return newInstanceHandle.Unwrap() as TInterface;
+            // HACK: Drivers should be loaded into separate AppDomains
+            if (AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(x => x.FullName == localDriver.Assembly.GetName().FullName) == null)
+            {
+                AppDomain.CurrentDomain.Load(localDriver.Assembly.GetName());
+            }
+
+            object newInstance = Activator.CreateInstance(localDriver.Implementor);
+            return newInstance as TInterface;
         }
 
         public override HorusDriverSummary[] EnumDrivers()
@@ -66,6 +72,7 @@ namespace Horus.Client.System
             if (localDriver != null)
             {
                 IHorusDriver driverInterfaceInstance = CreateDriverInstance<IHorusDriver>(localDriver);
+                driverInterfaceInstance.Initialize(new HorusContext(this));
                 return new HorusDriver(driverInterfaceInstance);
             }
 
