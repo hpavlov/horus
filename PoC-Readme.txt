@@ -31,9 +31,14 @@ Final notes: I expect the majority of this initial code to be completely redone 
 
 HOW TO MAKE THE VIDEO DRIVER/CLIENT WORK ON LOCAL CONNECTION:
 
-- Download and build the DirectShowVideoCapture driver from here: http://hpavlov@stash.teamserver.tigranetworks.co.uk/scm/horus/video.directshowvideocapture.git
+- Download and build the DirectShowVideoCapture driver from here: http://stash.teamserver.tigranetworks.co.uk/scm/horus/video.directshowvideocapture.git
+
 - Choose a location for the test bed for the Horus system (e.g. I have C:\Horus). Then create a system environment variable called HORUS_HOME and set it to your test bed location
+
 - Create a sub folder called Drivers and then DirectShowVideoCapture inside it. e.g. you will have a folder called C:\Horus\Drivers\DirectShowVideoCapture. Now copy all files from the DirectShowVideoCapture driver to this place. Those files should be: DirectShowVideoCapture.dll, DirectShowLib-2005.dll and Koyash.VideoUtilities.Native.dll
+
 - Now build the Horus solution
+
 - Run the Horus.Configurator. Move to the second tab called "Logical Devices" and press the "Search for Attached Devices" button. If there are any video cameras attached to your system you should see them listed at the top and they will have [Available] [Not Configured] at the end. Select the camera you want to use and click "Configure Driver". You can simply press "OK" for this. Now the device should show as "[Available] [Configured]"
+
 - Close the Horus.Configurator and run the HorusClientApp. Move to the "Video Client" tab and press "List Devices". You should see the camera you configured being selected in the dropdown and the button will change its text to "Connect". Press the "Connect" button. You should see video coming through.
