@@ -11,34 +11,8 @@ using SampleCameraDrivers;
 
 namespace Horus.Client.System
 {
-    class Proxy : MarshalByRefObject
-    {
-        public Assembly GetAssembly(string assemblyPath)
-        {
-            try
-            {
-                return Assembly.LoadFrom(assemblyPath);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Cannot looad " + assemblyPath, ex);
-            }
-        }
-    }
-
     internal class NativeHorusDriversDriscoveryService
     {
-        static Assembly appDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            // TODO: Search the same folder
-            return null;
-        }
-
-        static void appDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
-        {
-            //
-        }
-
         public static LocalHorusDriver[] DriscoverAvailableDrivers()
         {
             var rv = new List<LocalHorusDriver>();
@@ -52,47 +26,8 @@ namespace Horus.Client.System
 
             foreach(string dllPath in allDlls)
             {
-                //// TODO: This needs to be reviews and everything else that should be setup needs to be set
-                ////       We also need a really solid AppDomain wrapper that will handle exceptions, etc.
-                //// http://stackoverflow.com/questions/658498/how-to-load-assembly-to-appdomain-with-all-references-recursively
-                //// NOTE: This may be also worth looking at: https://github.com/jduv/AppDomainToolkit/blob/master/README.md
-                //var setup = new AppDomainSetup()
-                //{
-                //    ApplicationBase = AppDomain.CurrentDomain.BaseDirectory,
-                //    PrivateBinPath = Path.GetDirectoryName(dllPath),
-                //    ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile
-                //};
-
-                //AppDomain appDomain = AppDomain.CreateDomain("Horus-Driver-Check", AppDomain.CurrentDomain.Evidence, setup);
-                //try
-                //{
-                //    appDomain.AssemblyLoad += new AssemblyLoadEventHandler(appDomain_AssemblyLoad);
-                //    appDomain.AssemblyResolve += new ResolveEventHandler(appDomain_AssemblyResolve);
-
-                //    Type type = typeof(Proxy);
-                //    var value = (Proxy)appDomain.CreateInstanceAndUnwrap(
-                //        type.Assembly.FullName,
-                //        type.FullName);
-
-                //    asm = value.GetAssembly(dllPath);
-
-                //    allTypes = asm.GetTypes();
-
-                //    LocalHorusDriver[] horusDrivers = allTypes
-                //        .Where(x => typeof(IHorusDriver).IsAssignableFrom(x))
-                //        .Select(x => new LocalHorusDriver(asm, x))
-                //        .ToArray();
-
-                //    rv.AddRange(horusDrivers);
-                //}
-                //catch(Exception ex)
-                //{ }
-                //finally
-                //{
-                //    AppDomain.Unload(appDomain);
-                //}
-
                 // HACK: The code above needs to be fixed to work. Currently we load the assemblies in our own AppDomain. This is really bad!
+                // TODO: In the final version we need to load drivers in their own AppDomains via the DriverAppDomainManager
                 try
                 {
                     asm = Assembly.LoadFrom(dllPath);

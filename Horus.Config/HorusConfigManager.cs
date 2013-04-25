@@ -52,7 +52,7 @@ namespace Horus.Config
                 SaveConfigurationNoLocking();
             }
         }
-        public void SaveConfigurationNoLocking()
+        public void SaveConfigurationNoLocking()  
         {
             configPersister.WriteConfiguration(horusDeviceConfig.AsSerialized());
         }
