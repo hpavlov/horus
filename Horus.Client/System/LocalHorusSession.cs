@@ -88,10 +88,29 @@ namespace Horus.Client.System
             if (localDriver != null)
             {
                 IHorusDriver driverInterfaceInstance = CreateDriverInstance<IHorusDriver>(localDriver);
+                driverInterfaceInstance.Initialize(new HorusContext(this));
+                driverInterfaceInstance.LinkToDevice(deviceSummary.DeviceName);
                 return new HorusCamera(driverInterfaceInstance);
             }
 
             return null;
+        }
+
+        public override HorusVideo CreateVideoInstance(HorusDeviceSummary deviceSummary)
+        {
+            EnsureLocalDrivers();
+
+            LocalHorusDriver localDriver = allLocalDrivers.SingleOrDefault(x => x.Implementor.FullName == deviceSummary.DeviceDriver.DriverName);
+
+            if (localDriver != null)
+            {
+                IHorusDriver driverInterfaceInstance = CreateDriverInstance<IHorusDriver>(localDriver);
+                driverInterfaceInstance.Initialize(new HorusContext(this));
+                driverInterfaceInstance.LinkToDevice(deviceSummary.DeviceName);                
+                return new HorusVideo(driverInterfaceInstance);
+            }
+
+            return null;            
         }
     }
 }

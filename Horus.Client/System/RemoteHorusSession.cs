@@ -83,5 +83,10 @@ namespace Horus.Client.System
         {
             throw new NotImplementedException();
         }
+
+        public override HorusVideo CreateVideoInstance(HorusDeviceSummary deviceSummary)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

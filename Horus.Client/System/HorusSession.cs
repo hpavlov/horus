@@ -31,6 +31,7 @@ namespace Horus.Client.System
         //       When a new driver interface becomes available and supported by the platform, the new methods will ne added to this HorusSession class
         public abstract HorusDriver CreateDriverInstance(HorusDriverSummary driverSummary);
         public abstract HorusCamera CreateCameraInstance(HorusDeviceSummary deviceSummary);
+        public abstract HorusVideo CreateVideoInstance(HorusDeviceSummary deviceSummary);
 
         private void EnsureAvailableDrivers()
         {

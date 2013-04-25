@@ -10,15 +10,35 @@ using Horus.Client.Drivers;
 using Horus.Client.System;
 using Horus.Model.Drivers;
 using Horus.Model.Interfaces;
+using HorusClientApp.Controllers;
+using HorusClientApp.ViewModel;
 
 namespace HorusClientApp
 {
 	public partial class frmMain : Form
 	{
+	    private VideoController videoController;
+
 		public frmMain()
 		{
 			InitializeComponent();
+
+		    videoController = new VideoController(this);
 		}
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                videoController.DisconnectFromCamera();
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         private void btnLocalCamera1_Click(object sender, EventArgs e)
         {
@@ -61,6 +81,38 @@ namespace HorusClientApp
             HorusCamera camera = remoteSession.CreateCameraInstance(deviceSummary);
 
             MessageBox.Show(camera.Method1(0));
+        }
+
+
+	    private HorusSession localVideoTestSession;
+
+        private void btnAction_Click(object sender, EventArgs e)
+        {
+            if (localVideoTestSession == null)
+            {
+                localVideoTestSession = HorusSession.CreateLocalSession();
+                List<HorusDeviceSummary> logicalDevices = localVideoTestSession.EnumDevices<IVideo>();
+
+                cbLogicalVideoDevices.Items.Clear();
+                foreach(HorusDeviceSummary device in logicalDevices)
+                {
+                    cbLogicalVideoDevices.Items.Add(new LogicalDeviceModel(device));
+                }
+
+                if (cbLogicalVideoDevices.Items.Count > 0)
+                    cbLogicalVideoDevices.SelectedIndex = 0;
+
+                btnAction.Text = "Connect";
+            }
+            else
+            {
+                var logicalDevice = cbLogicalVideoDevices.SelectedItem as LogicalDeviceModel;
+                if (logicalDevice != null)
+                {
+                    HorusVideo video = localVideoTestSession.CreateVideoInstance(logicalDevice.DeviceSummary);
+                    videoController.PlayVideo(video);
+                }
+            }
         }
 
 	}
