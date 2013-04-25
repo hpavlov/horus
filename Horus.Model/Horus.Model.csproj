@@ -51,6 +51,7 @@
     <Compile Include="Exceptions\HorusDriverNotConnectedException.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Interfaces\Enums.cs" />
+    <Compile Include="Interfaces\IDome.cs" />
     <Compile Include="Interfaces\IHorusContext.cs" />
     <Compile Include="Interfaces\IHorusDriver.cs" />
     <Compile Include="Drivers\HorusEnabledDeviceSummary.cs" />
