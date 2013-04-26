@@ -20,14 +20,7 @@ namespace Horus.Server.Helpers
 
             foreach (MethodParameter param in parameters.Parameters)
             {
-                // TODO: This is a rather naive implementation
-
-                if (param.Type == "System.String")
-                    paramList.Add(Convert.ToString(param.Value));
-                else if (param.Type == "System.Int32")
-                    paramList.Add(Convert.ToInt32(param.Value));
-                else
-                    throw new NotSupportedException();
+                paramList.Add(GetParameterValue(param));
             }
 
             try
@@ -38,6 +31,52 @@ namespace Horus.Server.Helpers
             {
                 throw tex.InnerException;
             }
+        }
+
+        public static object DevicePropertyGet(object deviceInstace, string propertyName)
+        {
+            Type deviceType = deviceInstace.GetType();
+            PropertyInfo property = deviceType.GetProperty(propertyName);
+
+            try
+            {
+                return property.GetValue(deviceInstace, null);
+            }
+            catch (TargetInvocationException tex)
+            {
+                throw tex.InnerException;
+            }
+        }
+
+        public static void DevicePropertySet(object deviceInstace, string propertyName, MethodCallParametersList parameters)
+        {
+            Type deviceType = deviceInstace.GetType();
+            PropertyInfo property = deviceType.GetProperty(propertyName);
+
+            try
+            {
+                object propertyValue = GetParameterValue(parameters.Parameters[0]);
+
+                property.SetValue(deviceInstace, propertyValue, null);
+            }
+            catch (TargetInvocationException tex)
+            {
+                throw tex.InnerException;
+            }
+        }
+
+        private static object GetParameterValue(MethodParameter param)
+        {
+            // TODO: This is a rather naive implementation
+
+            if (param.Type == "System.String")
+                return Convert.ToString(param.Value);
+            else if (param.Type == "System.Int32")
+                return Convert.ToInt32(param.Value);
+            else if (param.Type == "System.Boolean")
+                return Convert.ToBoolean(param.Value);
+            else
+                throw new NotSupportedException();
         }
     }
 }

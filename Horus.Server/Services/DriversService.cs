@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Horus.Client.Drivers;
 using Horus.Client.System;
+using Horus.Client.System.Persisters;
 using Horus.Model.Drivers;
 using Horus.Model.Helpers;
 using Horus.Model.Interfaces;
@@ -77,6 +78,46 @@ namespace Horus.Server.Services
                 {
                     Response.Write(returnValue);
                 }
+            }
+        }
+
+        [Path("/drivers/{instanceId}/property/{propertyName}")]
+        [Verb("GET")]
+        public void DriverInstancePropertyGet(string instanceId, string propertyName, string sessionId)
+        {
+            object deviceInstance = ServerContext.Instance.GetSessionObject(sessionId, instanceId);
+
+            object returnValue = DeviceInterfaceCaller.DevicePropertyGet(deviceInstance, propertyName);
+
+            if (returnValue != null)
+            {
+                // TODO: Need to come up with some sort of registration driven model persister
+                //       This is probably a naive implementation
+
+                IModelPersister modelPersister =  ModelPersister.Instance.GetCustomPersister(returnValue.GetType());
+                if (modelPersister != null)
+                {
+                    string content = modelPersister.ToHttpResponse(returnValue);
+                    Response.Write(content);
+                }
+                else
+                    Response.Write(returnValue);
+            }
+        }
+
+        [Path("/drivers/{instanceId}/property/{propertyName}")]
+        [Verb("POST")]
+        public void DriverInstancePropertySet(string instanceId, string propertyName, string sessionId)
+        {
+            object deviceInstance = ServerContext.Instance.GetSessionObject(sessionId, instanceId);
+            using (TextReader reader = new StreamReader(Request.InputStream))
+            {
+                string stringContent = reader.ReadToEnd();
+
+                // TODO: deserialize a MethodCallParametersList from the request body (NOTE: check content type for JSON or XML)
+                MethodCallParametersList paramList = stringContent.AsDeserialized<MethodCallParametersList>();
+
+                DeviceInterfaceCaller.DevicePropertySet(deviceInstance, propertyName, paramList);
             }
         }
     }

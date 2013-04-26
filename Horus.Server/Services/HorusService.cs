@@ -30,7 +30,7 @@ namespace Horus.Server.Services
 
                 Response.Write(output.ToString());
                 Response.Headers["Content-Type"] = "application/xml";
-            }                 
+            }
         }
     }
 }

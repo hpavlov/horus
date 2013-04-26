@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using Horus.Client.Drivers;
 using Horus.Client.Remote;
+using Horus.Client.System.Persisters;
 using Horus.Model.Drivers;
 using Horus.Model.Server;
 using Horus.Model.Helpers;
@@ -77,13 +78,67 @@ namespace Horus.Client.System
             }
         }
 
+        internal TResult InterfaceRemoteProperyGet<TInterface, TResult>(string instanceId, Expression<Func<TInterface, TResult>> func)
+        {
+            var memberAccess = func.Body as MemberExpression;
+
+            string url = horusServiceUri +
+                string.Format("drivers/{0}/property/{1}?sessionId={2}", instanceId, memberAccess.Member.Name, sessionId);
+            
+            // TODO: Can interface property have parameters (like indexed properties?)
+            // Expression propertyExpression = ((MemberExpression)func.Body).Expression;
+
+            string strResponse = MakeHttpGetCall(url);
+
+            IModelPersister modelPersister = ModelPersister.Instance.GetCustomPersister(typeof (TResult));
+            if (modelPersister != null)
+                return (TResult) modelPersister.FromHttpResponse(strResponse);
+
+            if (typeof(TResult) == typeof(string))
+                return (TResult)(object)strResponse;
+            else if (typeof(TResult) == typeof(bool))
+                return (TResult)(object)Convert.ToBoolean(strResponse);
+            else if (typeof(TResult) == typeof(int))
+                return (TResult)(object)Convert.ToInt32(strResponse);
+            else if (typeof(TResult).IsEnum)
+                return (TResult)Enum.Parse(typeof(TResult), strResponse);
+
+            return default(TResult);
+        }
+
+        // TODO: This could be done with a property assignment lambda expression with a small workaround
+        //       See for example http://stackoverflow.com/questions/208969/assignment-in-net-3-5-expression-trees
+        internal void InterfaceRemoteProperySet<TInterface, TResult>(string instanceId, Expression<Func<TInterface, TResult>> func, object value)
+        {
+            var memberAccess = func.Body as MemberExpression;
+
+            string url = horusServiceUri +
+                string.Format("drivers/{0}/property/{1}?sessionId={2}", instanceId, memberAccess.Member.Name, sessionId);
+
+            // TODO: Can interface property have parameters (like indexed properties?)
+
+            //Expression propertyExpression = (MemberExpression) func.Body;
+            //UnaryExpression objectMember = Expression.Convert(propertyExpression, typeof(object));
+            //Func<object> getter = Expression.Lambda<Func<object>>(objectMember).Compile();
+            //object propertyValueToSet = getter();
+
+            var methodParamValues = new MethodCallParametersList();
+            var methodParam = new MethodParameter()
+            {
+                Type = typeof(TResult).FullName,
+                Value = value != null ? value.ToString() : null
+            };
+            methodParamValues.Parameters.Add(methodParam);
+
+            MakeHttpPostCall(url, methodParamValues.AsSerialized());
+        }
+
+        // HACK: Return type should not be fixed if possible, if not implement strong typeness in some other way ...
         internal string InterfaceRemoteFunctionCall<TInterface, TResult>(string instanceId, Expression<Func<TInterface, TResult>> func)
         {
             string interfaceName = (typeof(TInterface)).Name;
 
             // TODO: find the name of the property returned by the function | or name of the function being called using MVC style lambda expressions
-
-            //var memberAccess = func.Body as MemberExpression;
 
             var methodCall = func.Body as MethodCallExpression;
             
@@ -155,7 +210,11 @@ namespace Horus.Client.System
                         deviceSummary.DeviceDriver.DriverName, 
                         sessionId));
 
-            return new HorusVideo(null);
+            HorusDriverInstanceSummary summary = strResponse.AsDeserialized<HorusDriverInstanceSummary>();
+
+            // TODO: The summary may contain error messages and other information 
+
+            return new HorusVideo(new RemoteVideo(this, summary.InstanceId));
         }
 
         public override List<HorusDeviceSummary> EnumDevices()

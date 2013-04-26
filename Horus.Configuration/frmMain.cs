@@ -38,7 +38,7 @@ namespace Horus.Config
         {
             lbDrivers.Items.Clear();
 
-            drivers = NativeHorusDriversDriscoveryService.DriscoverAvailableDrivers();
+            drivers = NativeHorusDriversDiscoveryService.DriscoverAvailableDrivers();
             foreach(LocalHorusDriver driver in drivers)
             {
                 lbDrivers.Items.Add(driver.Implementor);

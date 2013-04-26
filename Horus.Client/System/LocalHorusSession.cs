@@ -20,7 +20,7 @@ namespace Horus.Client.System
             if (allLocalDrivers == null)
             {
                 allLocalDrivers = new List<LocalHorusDriver>();
-                allLocalDrivers.AddRange(NativeHorusDriversDriscoveryService.DriscoverAvailableDrivers());
+                allLocalDrivers.AddRange(NativeHorusDriversDiscoveryService.DriscoverAvailableDrivers());
                 allLocalDrivers.AddRange(ASCOMDriversDiscoveryService.DriscoverAvailableDrivers());
             }            
         }

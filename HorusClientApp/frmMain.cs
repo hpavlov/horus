@@ -85,14 +85,21 @@ namespace HorusClientApp
         }
 
 
-	    private HorusSession localVideoTestSession;
+	    private HorusSession videoTestSession;
 
         private void btnAction_Click(object sender, EventArgs e)
         {
-            if (localVideoTestSession == null)
+            if (videoTestSession == null)
             {
-                localVideoTestSession = HorusSession.CreateLocalSession();
-                List<HorusDeviceSummary> logicalDevices = localVideoTestSession.EnumDevices<IVideo>();
+                bool isRemote = rbVideoRemote.Checked;
+                rbVideoRemote.Enabled = false;
+                rbVideoLocal.Enabled = false;
+
+                videoTestSession = isRemote 
+                    ? HorusSession.CreateRemoteSession(new Uri(tbxEndpointV1.Text), tbxUser.Text, tbxPassword.Text) 
+                    : HorusSession.CreateLocalSession();
+
+                List<HorusDeviceSummary> logicalDevices = videoTestSession.EnumDevices<IVideo>();
 
                 cbLogicalVideoDevices.Items.Clear();
                 foreach(HorusDeviceSummary device in logicalDevices)
@@ -110,7 +117,7 @@ namespace HorusClientApp
                 var logicalDevice = cbLogicalVideoDevices.SelectedItem as LogicalDeviceModel;
                 if (logicalDevice != null)
                 {
-                    HorusVideo video = localVideoTestSession.CreateVideoInstance(logicalDevice.DeviceSummary);
+                    HorusVideo video = videoTestSession.CreateVideoInstance(logicalDevice.DeviceSummary);
                     videoController.PlayVideo(video);
                 }
             }
