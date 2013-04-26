@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drivers\HorusDome.cs" />
     <Compile Include="Drivers\HorusCamera.cs" />
     <Compile Include="Drivers\HorusDriver.cs" />
     <Compile Include="Drivers\HorusVideo.cs" />

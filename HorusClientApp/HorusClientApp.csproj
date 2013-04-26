@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DomeController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
