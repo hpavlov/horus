@@ -31,20 +31,20 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbxEndpointV1 = new System.Windows.Forms.TextBox();
             this.tabVideo = new System.Windows.Forms.TabPage();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.picboxVideo = new System.Windows.Forms.PictureBox();
-            this.cbLogicalVideoDevices = new System.Windows.Forms.ComboBox();
-            this.btnAction = new System.Windows.Forms.Button();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.btnAction = new System.Windows.Forms.Button();
+            this.cbLogicalVideoDevices = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabVideo.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxVideo)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLocalCamera1
@@ -88,7 +88,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(492, 336);
+            this.tabPage1.Size = new System.Drawing.Size(752, 512);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Local CRL Client";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -106,7 +106,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(492, 336);
+            this.tabPage2.Size = new System.Drawing.Size(752, 512);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "HTTP Client";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -152,8 +152,9 @@
             this.btnRemoteCamera2.Name = "btnRemoteCamera2";
             this.btnRemoteCamera2.Size = new System.Drawing.Size(142, 23);
             this.btnRemoteCamera2.TabIndex = 2;
-            this.btnRemoteCamera2.Text = "Unicorn2.Method1()";
+            this.btnRemoteCamera2.Text = "Camera2.Method1()";
             this.btnRemoteCamera2.UseVisualStyleBackColor = true;
+            this.btnRemoteCamera2.Click += new System.EventHandler(this.btnRemoteCamera2_Click);
             // 
             // btnRemoteCamera1
             // 
@@ -161,7 +162,7 @@
             this.btnRemoteCamera1.Name = "btnRemoteCamera1";
             this.btnRemoteCamera1.Size = new System.Drawing.Size(142, 23);
             this.btnRemoteCamera1.TabIndex = 0;
-            this.btnRemoteCamera1.Text = "Unicorn1.Method1()";
+            this.btnRemoteCamera1.Text = "Camera1.Method1()";
             this.btnRemoteCamera1.UseVisualStyleBackColor = true;
             this.btnRemoteCamera1.Click += new System.EventHandler(this.btnRemoteCamera1_Click);
             // 
@@ -194,18 +195,6 @@
             this.tabVideo.Text = "Video Client";
             this.tabVideo.UseVisualStyleBackColor = true;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.radioButton2);
-            this.panel1.Controls.Add(this.radioButton1);
-            this.panel1.Controls.Add(this.btnAction);
-            this.panel1.Controls.Add(this.cbLogicalVideoDevices);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(746, 39);
-            this.panel1.TabIndex = 0;
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.picboxVideo);
@@ -224,23 +213,28 @@
             this.picboxVideo.TabIndex = 0;
             this.picboxVideo.TabStop = false;
             // 
-            // cbLogicalVideoDevices
+            // panel1
             // 
-            this.cbLogicalVideoDevices.FormattingEnabled = true;
-            this.cbLogicalVideoDevices.Location = new System.Drawing.Point(117, 8);
-            this.cbLogicalVideoDevices.Name = "cbLogicalVideoDevices";
-            this.cbLogicalVideoDevices.Size = new System.Drawing.Size(240, 21);
-            this.cbLogicalVideoDevices.TabIndex = 0;
+            this.panel1.Controls.Add(this.radioButton2);
+            this.panel1.Controls.Add(this.radioButton1);
+            this.panel1.Controls.Add(this.btnAction);
+            this.panel1.Controls.Add(this.cbLogicalVideoDevices);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(746, 39);
+            this.panel1.TabIndex = 0;
             // 
-            // btnAction
+            // radioButton2
             // 
-            this.btnAction.Location = new System.Drawing.Point(7, 7);
-            this.btnAction.Name = "btnAction";
-            this.btnAction.Size = new System.Drawing.Size(98, 23);
-            this.btnAction.TabIndex = 1;
-            this.btnAction.Text = "List Devices";
-            this.btnAction.UseVisualStyleBackColor = true;
-            this.btnAction.Click += new System.EventHandler(this.btnAction_Click);
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Enabled = false;
+            this.radioButton2.Location = new System.Drawing.Point(418, 10);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(83, 17);
+            this.radioButton2.TabIndex = 3;
+            this.radioButton2.Text = "Local HTTP";
+            this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // radioButton1
             // 
@@ -254,16 +248,23 @@
             this.radioButton1.Text = "Local";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // btnAction
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Enabled = false;
-            this.radioButton2.Location = new System.Drawing.Point(418, 10);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(83, 17);
-            this.radioButton2.TabIndex = 3;
-            this.radioButton2.Text = "Local HTTP";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.btnAction.Location = new System.Drawing.Point(7, 7);
+            this.btnAction.Name = "btnAction";
+            this.btnAction.Size = new System.Drawing.Size(98, 23);
+            this.btnAction.TabIndex = 1;
+            this.btnAction.Text = "List Devices";
+            this.btnAction.UseVisualStyleBackColor = true;
+            this.btnAction.Click += new System.EventHandler(this.btnAction_Click);
+            // 
+            // cbLogicalVideoDevices
+            // 
+            this.cbLogicalVideoDevices.FormattingEnabled = true;
+            this.cbLogicalVideoDevices.Location = new System.Drawing.Point(117, 8);
+            this.cbLogicalVideoDevices.Name = "cbLogicalVideoDevices";
+            this.cbLogicalVideoDevices.Size = new System.Drawing.Size(240, 21);
+            this.cbLogicalVideoDevices.TabIndex = 0;
             // 
             // frmMain
             // 
@@ -278,10 +279,10 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabVideo.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picboxVideo)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
 		}

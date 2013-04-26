@@ -7,6 +7,11 @@ namespace Horus.Model.Server
 {
     public class HorusDriverInstanceSummary
     {
+        public HorusDriverInstanceSummary()
+        {
+            // Required fro XML serialization
+        }
+
         public HorusDriverInstanceSummary(string instainceId)
         {
             InstanceId = instainceId;

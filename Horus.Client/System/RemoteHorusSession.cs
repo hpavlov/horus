@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using Horus.Client.Drivers;
+using Horus.Client.Remote;
 using Horus.Model.Drivers;
 using Horus.Model.Server;
 using Horus.Model.Helpers;
@@ -33,18 +36,36 @@ namespace Horus.Client.System
 
         private string MakeHttpGetCall(string url)
         {
-            return MakeHttpCall(url, "GET");
+            return MakeHttpCall(url, "GET", null);
         }
 
         private string MakeHttpPostCall(string url)
         {
-            return MakeHttpCall(url, "POST");
+            return MakeHttpCall(url, "POST", null);
         }
 
-        private string MakeHttpCall(string url, string method)
+        private string MakeHttpPostCall(string url, string requestBody)
+        {
+            return MakeHttpCall(url, "POST", requestBody);
+        }
+
+        private string MakeHttpCall(string url, string method, string requestBody)
         {
             var request = HttpWebRequest.Create(url);
             request.Method = method;
+
+            if (requestBody != null)
+            {
+                byte[] bytes = Encoding.ASCII.GetBytes(requestBody);
+
+                request.ContentLength = bytes.Length;
+                request.ContentType = "application/xml";
+                using (var wrt = new BinaryWriter(request.GetRequestStream()))
+                {
+                    wrt.Write(bytes, 0, bytes.Length);
+                }
+                
+            }
 
             using (WebResponse response = request.GetResponse())
             {
@@ -56,22 +77,39 @@ namespace Horus.Client.System
             }
         }
 
-        internal string InterfaceRemoteFunctionCall<TInterface, TResult>(string driverName, Expression<Func<TInterface, TResult>> func)
+        internal string InterfaceRemoteFunctionCall<TInterface, TResult>(string instanceId, Expression<Func<TInterface, TResult>> func)
         {
             string interfaceName = (typeof(TInterface)).Name;
 
             // TODO: find the name of the property returned by the function | or name of the function being called using MVC style lambda expressions
 
-            var memberAccess = func.Body as MemberExpression;
+            //var memberAccess = func.Body as MemberExpression;
+
             var methodCall = func.Body as MethodCallExpression;
+            
+            string url = horusServiceUri + 
+                string.Format("drivers/{0}/call-method/{1}?sessionId={2}", instanceId, methodCall.Method.Name, sessionId);
 
+            var methodParamValues = new MethodCallParametersList();
+            ReadOnlyCollection<Expression> arguments = ((MethodCallExpression) func.Body).Arguments;
 
-            var bld = new UriBuilder(horusServiceUri);
-            bld.Path = string.Format("/drivers/{0}/{1}/{2}", driverName, interfaceName, methodCall.Method.Name);
+            ParameterInfo[] methodParams = methodCall.Method.GetParameters();
+            for (int i = 0; i < methodParams.Count(); i++)
+            {
+                ParameterInfo prm = methodParams[i];
+                UnaryExpression argAsObj = Expression.Convert(arguments[i], typeof (object));
+                object argValue = Expression.Lambda<Func<object>>(argAsObj, null).Compile()();
 
-            bld.Query = ""; //TODO: Add function call parameters here
+                var methodParam = new MethodParameter()
+                {
+                    Type = prm.ParameterType.FullName,
+                    Value = argValue != null ? argValue.ToString() : null
+                };
 
-            string strResponse = MakeHttpPostCall(bld.ToString());
+                methodParamValues.Parameters.Add(methodParam);
+            }
+
+            string strResponse = MakeHttpPostCall(url, methodParamValues.AsSerialized());
 
             if (typeof(TResult) == typeof(string))
                 return strResponse;
@@ -96,12 +134,28 @@ namespace Horus.Client.System
 
         public override HorusCamera CreateCameraInstance(HorusDeviceSummary deviceSummary)
         {
-            throw new NotImplementedException();
+            string strResponse = MakeHttpPostCall(horusServiceUri +
+                    string.Format("drivers/{0}/create-instance?driverName={1}&interfaceName=ICamera&sessionId={2}",
+                        deviceSummary.DeviceName,
+                        deviceSummary.DeviceDriver.DriverName,
+                        sessionId));
+
+            HorusDriverInstanceSummary summary = strResponse.AsDeserialized<HorusDriverInstanceSummary>();
+
+            // TODO: The summary may contain error messages and other information 
+
+            return new HorusCamera(new RemoteCamera(this, summary.InstanceId));
         }
 
         public override HorusVideo CreateVideoInstance(HorusDeviceSummary deviceSummary)
         {
-            throw new NotImplementedException();
+            string strResponse = MakeHttpPostCall(horusServiceUri +
+                    string.Format("drivers/{0}/create-instance?driverName={1}&interfaceName=IVideo&sessionId={2}", 
+                        deviceSummary.DeviceName, 
+                        deviceSummary.DeviceDriver.DriverName, 
+                        sessionId));
+
+            return new HorusVideo(null);
         }
 
         public override List<HorusDeviceSummary> EnumDevices()
@@ -117,8 +171,11 @@ namespace Horus.Client.System
             var rv = new List<HorusDeviceSummary>();
             rv = EnumDevices();
 
-            ICamera interface not returned ???
-            return rv.Where(x => x.DeviceDriver.SupportedInterfaces.Exists(y => string.Equals(y, typeof (TSupportedInterface).FullName, StringComparison.InvariantCultureIgnoreCase))).ToList();
+            // NOTE: This rediculous linq check is because I was thinking I am having string comparison issues but it was something else. This need to be simplified
+            return rv.Where(x => x.DeviceDriver
+                .SupportedInterfaces
+                .Exists(y => string.Equals(y, typeof (TSupportedInterface).FullName, StringComparison.InvariantCultureIgnoreCase)))
+                .ToList();
         }
     }
 }

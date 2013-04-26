@@ -17,11 +17,6 @@ namespace Horus.Server.Services
 			Response.Write("UnmappedREequestUrl");
 		}
 
-        //protected Session GetSession(string sessionId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         protected void XmlResponse(object model)
         {
             if (model != null)

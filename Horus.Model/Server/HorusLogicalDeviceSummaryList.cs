@@ -11,7 +11,9 @@ namespace Horus.Model.Server
         public HorusDeviceSummary[] LogicalDevices;
 
         public HorusLogicalDeviceSummaryList()
-        { }
+        {
+            // Required fro XML serialization
+        }
 
         public HorusLogicalDeviceSummaryList(List<HorusDeviceSummary> logicalDevices)
         {

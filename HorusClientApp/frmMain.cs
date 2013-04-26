@@ -116,5 +116,21 @@ namespace HorusClientApp
             }
         }
 
+        private void btnRemoteCamera2_Click(object sender, EventArgs e)
+        {
+            // NOTE: In a real client application the session and driver instantiation will be managed at a different scope.
+            //       This is just a quick example and includes all objects that need to be created and all methods that need to be called 
+            //       during the lifetime of the realworld app in order to make a method call on a driver interface
+
+            var remoteSession = HorusSession.CreateRemoteSession(new Uri(tbxEndpointV1.Text), tbxUser.Text, tbxPassword.Text);
+
+            List<HorusDeviceSummary> devices = remoteSession.EnumDevices<ICamera>();
+            HorusDeviceSummary deviceSummary = devices.First(x => x.DeviceName == "DummyCamera2Device");
+
+            HorusCamera camera = remoteSession.CreateCameraInstance(deviceSummary);
+
+            MessageBox.Show(camera.Method1(0));
+        }
+
 	}
 }

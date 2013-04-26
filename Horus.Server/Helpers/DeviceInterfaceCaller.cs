@@ -22,9 +22,9 @@ namespace Horus.Server.Helpers
             {
                 // TODO: This is a rather naive implementation
 
-                if (param.Type == "string")
+                if (param.Type == "System.String")
                     paramList.Add(Convert.ToString(param.Value));
-                else if (param.Type == "int")
+                else if (param.Type == "System.Int32")
                     paramList.Add(Convert.ToInt32(param.Value));
                 else
                     throw new NotSupportedException();

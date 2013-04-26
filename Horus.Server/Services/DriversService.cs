@@ -28,11 +28,24 @@ namespace Horus.Server.Services
         public void CreateDriverInstance(string device, string driverName, string interfaceName, string sessionId)
         {
             Session session = ServerContext.Instance.GetSession(sessionId);
-        
-            if (string.Equals(interfaceName, "IVideo", StringComparison.InvariantCultureIgnoreCase))
+
+            if (string.Equals(interfaceName, "ICamera", StringComparison.InvariantCultureIgnoreCase))
+            {
+                HorusDeviceSummary summary = session.LocalHorusSession.EnumDevices<ICamera>()
+                            .FirstOrDefault(x =>
+                                string.Equals(x.DeviceName, device, StringComparison.CurrentCultureIgnoreCase) &&
+                                string.Equals(x.DeviceDriver.DriverName, driverName, StringComparison.CurrentCultureIgnoreCase));
+
+                HorusCamera camera = session.LocalHorusSession.CreateCameraInstance(summary);
+                string objectId = Guid.NewGuid().ToString();
+                ServerContext.Instance.AddSessionObject(sessionId, objectId, camera);
+
+                XmlResponse(new HorusDriverInstanceSummary(objectId));
+            }
+            else if (string.Equals(interfaceName, "IVideo", StringComparison.InvariantCultureIgnoreCase))
             {
                 HorusDeviceSummary summary = session.LocalHorusSession.EnumDevices<IVideo>()
-                            .FirstOrDefault(x => 
+                            .FirstOrDefault(x =>
                                 string.Equals(x.DeviceName, device, StringComparison.CurrentCultureIgnoreCase) &&
                                 string.Equals(x.DeviceDriver.DriverName, driverName, StringComparison.CurrentCultureIgnoreCase));
 
@@ -58,7 +71,12 @@ namespace Horus.Server.Services
                 // TODO: deserialize a MethodCallParametersList from the request body (NOTE: check content type for JSON or XML)
                 MethodCallParametersList paramList = stringContent.AsDeserialized<MethodCallParametersList>();
 
-                DeviceInterfaceCaller.MakeDeviceMethodCall(deviceInstance, methodName, paramList);
+                object returnValue = DeviceInterfaceCaller.MakeDeviceMethodCall(deviceInstance, methodName, paramList);
+
+                if (returnValue != null)
+                {
+                    Response.Write(returnValue);
+                }
             }
         }
     }

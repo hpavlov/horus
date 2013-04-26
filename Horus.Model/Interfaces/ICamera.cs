@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Horus.Model.Interfaces
 {
-	public interface ICamera
+    public interface ICamera : IHorusDriver
 	{
 		string Method1(int arg1);
         int Property1 { get; set; }
