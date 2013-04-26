@@ -25,6 +25,7 @@ namespace Horus.Config
 
             deviceController = new DeviceController(this);
 
+            
             HorusConfigManager.Instance.LoadConfiguration();
         }
 

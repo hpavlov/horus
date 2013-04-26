@@ -7,6 +7,8 @@ using System.Net;
 using System.Text;
 using Horus.Client.Drivers;
 using Horus.Model.Drivers;
+using Horus.Model.Server;
+using Horus.Model.Helpers;
 
 namespace Horus.Client.System
 {
@@ -22,12 +24,27 @@ namespace Horus.Client.System
 
         public void Login(string userName, string password)
         {
-            
+            // TODO: We need to think how to send the credential securely. May always need HTTPS for this, but may explore other options?
+
+            string response = MakeHttpPostCall(horusServiceUri + "session/new?userId=" + userName);
+
+            sessionId = response;
         }
 
-        private string MakeHttpCall(string url)
+        private string MakeHttpGetCall(string url)
+        {
+            return MakeHttpCall(url, "GET");
+        }
+
+        private string MakeHttpPostCall(string url)
+        {
+            return MakeHttpCall(url, "POST");
+        }
+
+        private string MakeHttpCall(string url, string method)
         {
             var request = HttpWebRequest.Create(url);
+            request.Method = method;
 
             using (WebResponse response = request.GetResponse())
             {
@@ -54,7 +71,7 @@ namespace Horus.Client.System
 
             bld.Query = ""; //TODO: Add function call parameters here
 
-            string strResponse = MakeHttpCall(bld.ToString());
+            string strResponse = MakeHttpPostCall(bld.ToString());
 
             if (typeof(TResult) == typeof(string))
                 return strResponse;
@@ -64,8 +81,6 @@ namespace Horus.Client.System
 
         public override HorusDriverSummary[] EnumDrivers()
         {
-            string strResponse = MakeHttpCall("/drivers/list");
-
             throw new NotImplementedException();
         }
 
@@ -87,6 +102,23 @@ namespace Horus.Client.System
         public override HorusVideo CreateVideoInstance(HorusDeviceSummary deviceSummary)
         {
             throw new NotImplementedException();
+        }
+
+        public override List<HorusDeviceSummary> EnumDevices()
+        {
+            string strResponse = MakeHttpGetCall(horusServiceUri + "devices/list?sessionId=" + sessionId);
+
+            HorusLogicalDeviceSummaryList deviceList = strResponse.AsDeserialized<HorusLogicalDeviceSummaryList>();
+            return new List<HorusDeviceSummary>(deviceList.LogicalDevices);
+        }
+
+        public override List<HorusDeviceSummary> EnumDevices<TSupportedInterface>()
+        {
+            var rv = new List<HorusDeviceSummary>();
+            rv = EnumDevices();
+
+            ICamera interface not returned ???
+            return rv.Where(x => x.DeviceDriver.SupportedInterfaces.Exists(y => string.Equals(y, typeof (TSupportedInterface).FullName, StringComparison.InvariantCultureIgnoreCase))).ToList();
         }
     }
 }

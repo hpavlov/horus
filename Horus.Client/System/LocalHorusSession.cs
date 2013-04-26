@@ -27,7 +27,7 @@ namespace Horus.Client.System
 
         private TInterface CreateDriverInstance<TInterface>(LocalHorusDriver localDriver) where TInterface : class
         {
-            // HACK: Drivers should be loaded into separate AppDomains
+            // HACK: LogicalDevices should be loaded into separate AppDomains
             if (AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(x => x.FullName == localDriver.Assembly.GetName().FullName) == null)
             {
                 AppDomain.CurrentDomain.Load(localDriver.Assembly.GetName());
@@ -50,7 +50,7 @@ namespace Horus.Client.System
                 rv.Add(new HorusDriverSummary()
                         {
                             DriverName = localDriver.Implementor.FullName,
-                            SupportedInterfaces = implementedHorusInterfaces
+                            SupportedInterfaces = implementedHorusInterfaces.Select(x => x.FullName).ToList()
                         }
                );
             }
@@ -111,6 +111,56 @@ namespace Horus.Client.System
             }
 
             return null;            
+        }
+
+
+        protected List<HorusDeviceSummary> GetLogicalDevicesForDrivers(HorusDriverSummary[] drivers)
+        {
+            var rv = new List<HorusDeviceSummary>();
+
+            foreach (HorusDriverSummary driver in drivers)
+            {
+                HorusDriver instance = CreateDriverInstance(driver);
+
+                HorusEnabledDeviceSummary[] deviceSummaries = instance.GetAvailableDevices();
+                foreach (HorusEnabledDeviceSummary device in deviceSummaries)
+                {
+                    // TODO: There will be two different questions thay will need to be answered here
+                    // (1) The Horus System enumerating all availabel devices and all drivers that can control them and
+                    // (2) The client asking for a device to control (which should be tied to the configuration of a specific device-driver pair configured by the Admin)
+                    //
+                    // This dummy implementation assumes only one driver will be available for each device
+                    HorusDeviceSummary deviceSummary = rv.SingleOrDefault(x => x.DeviceName == device.DeviceName);
+                    if (deviceSummary == null)
+                    {
+                        deviceSummary = new HorusDeviceSummary()
+                        {
+                            DeviceName = device.DeviceName,
+                            IsAvailable = device.IsAvailable,
+                            DeviceDriver = driver
+                        };
+                        rv.Add(deviceSummary);
+                    }
+                }
+            }
+
+            return rv;
+
+        }
+
+        public override List<HorusDeviceSummary> EnumDevices()
+        {
+            HorusDriverSummary[] drivers = EnumDrivers();
+
+            return GetLogicalDevicesForDrivers(drivers);
+        }
+
+
+        public override List<HorusDeviceSummary> EnumDevices<TSupportedInterface>()
+        {
+            HorusDriverSummary[] drivers = EnumDrivers<TSupportedInterface>();
+
+            return GetLogicalDevicesForDrivers(drivers);
         }
     }
 }

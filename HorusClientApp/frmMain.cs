@@ -76,7 +76,8 @@ namespace HorusClientApp
 
             var remoteSession = HorusSession.CreateRemoteSession(new Uri(tbxEndpointV1.Text), tbxUser.Text, tbxPassword.Text);
 
-            HorusDeviceSummary deviceSummary = remoteSession.EnumDevices<ICamera>().First(x => x.DeviceName == "DummyCamera1Device");
+            List<HorusDeviceSummary> devices = remoteSession.EnumDevices<ICamera>();
+            HorusDeviceSummary deviceSummary = devices.First(x => x.DeviceName == "DummyCamera1Device");
 
             HorusCamera camera = remoteSession.CreateCameraInstance(deviceSummary);
 

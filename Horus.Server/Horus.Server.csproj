@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\DeviceInterfaceCaller.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="HorusServer.cs">
       <SubType>Component</SubType>
@@ -70,9 +71,11 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DevicesService.cs" />
     <Compile Include="Services\DriversService.cs" />
     <Compile Include="Services\HorusService.cs" />
     <Compile Include="Services\SessionService.cs" />
+    <Compile Include="Context\ServerContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

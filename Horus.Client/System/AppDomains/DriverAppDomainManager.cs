@@ -7,7 +7,7 @@ namespace Horus.Client.System.AppDomains
 {
     public class DriverAppDomainManager
     {
-        // TODO: Drivers need to be created and run on separate app domains. They will have to communicate via MarshalByRefObjects 
+        // TODO: LogicalDevices need to be created and run on separate app domains. They will have to communicate via MarshalByRefObjects 
         // see http://stackoverflow.com/questions/5275839/inter-appdomain-communication-problem?rq=1 
         
         // NOTE: Parent Domain can also pass data to the child domain using something like this:
