@@ -11,7 +11,7 @@ using SampleCameraDrivers;
 
 namespace Horus.Client.System
 {
-    internal class NativeHorusDriversDriscoveryService
+    internal class NativeHorusDriversDiscoveryService
     {
         public static LocalHorusDriver[] DriscoverAvailableDrivers()
         {
@@ -19,7 +19,7 @@ namespace Horus.Client.System
 
             string driversPath = Path.GetFullPath(Environment.GetEnvironmentVariable("HORUS_HOME", EnvironmentVariableTarget.Machine) + @"\Drivers");
 
-            string[] allDlls = Directory.GetFiles(driversPath, "*.dll", SearchOption.AllDirectories);
+            string[] allDlls = Directory.GetFiles(driversPath, "*.dll", SearchOption.AllDirectories);   
 
             Assembly asm;
             Type[] allTypes;

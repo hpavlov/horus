@@ -133,7 +133,7 @@ namespace Horus.Config
                     // NOTE: HORUS_HOME must have been set by the installer
                     AssertHorusHomeIsConfigured();
 
-                    string addinsPath = Path.GetFullPath(Environment.GetEnvironmentVariable(HORUS_HOME, EnvironmentVariableTarget.Machine) + @"\Drivers");
+                    string addinsPath = Path.GetFullPath(Environment.GetEnvironmentVariable(HORUS_HOME, EnvironmentVariableTarget.Machine) + @"\LogicalDevices");
 
                     if (!Directory.Exists(addinsPath))
                         Directory.CreateDirectory(addinsPath);

@@ -68,7 +68,7 @@
             this.tabDrivers.Padding = new System.Windows.Forms.Padding(3);
             this.tabDrivers.Size = new System.Drawing.Size(585, 363);
             this.tabDrivers.TabIndex = 0;
-            this.tabDrivers.Text = "Installed Drivers";
+            this.tabDrivers.Text = "Installed LogicalDevices";
             this.tabDrivers.UseVisualStyleBackColor = true;
             // 
             // groupBox2

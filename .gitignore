@@ -91,6 +91,9 @@ _ReSharper*/
 # TeamCity is a build add-in
 _TeamCity*
 
+#InstallUtil log files
+InstallUtil.InstallLog
+
 # DotCover is a Code Coverage Tool
 *.dotCover
 

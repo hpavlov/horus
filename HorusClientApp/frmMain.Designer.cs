@@ -34,17 +34,17 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.picboxVideo = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.btnAction = new System.Windows.Forms.Button();
-            this.cbLogicalVideoDevices = new System.Windows.Forms.ComboBox();
+            this.rbVideoLocal = new System.Windows.Forms.RadioButton();
+			this.rbVideoRemote = new System.Windows.Forms.RadioButton();
             this.tabDome = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnDomeAction = new System.Windows.Forms.Button();
-            this.cbLogicalDomeDevices = new System.Windows.Forms.ComboBox();
             this.btnDomeConnect = new System.Windows.Forms.Button();
             this.btnDomeDisconnect = new System.Windows.Forms.Button();
+            this.cbLogicalDomeDevices = new System.Windows.Forms.ComboBox();
+            this.cbLogicalVideoDevices = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -162,8 +162,9 @@
             this.btnRemoteCamera2.Name = "btnRemoteCamera2";
             this.btnRemoteCamera2.Size = new System.Drawing.Size(142, 23);
             this.btnRemoteCamera2.TabIndex = 2;
-            this.btnRemoteCamera2.Text = "Unicorn2.Method1()";
+            this.btnRemoteCamera2.Text = "Camera2.Method1()";
             this.btnRemoteCamera2.UseVisualStyleBackColor = true;
+            this.btnRemoteCamera2.Click += new System.EventHandler(this.btnRemoteCamera2_Click);
             // 
             // btnRemoteCamera1
             // 
@@ -171,7 +172,7 @@
             this.btnRemoteCamera1.Name = "btnRemoteCamera1";
             this.btnRemoteCamera1.Size = new System.Drawing.Size(142, 23);
             this.btnRemoteCamera1.TabIndex = 0;
-            this.btnRemoteCamera1.Text = "Unicorn1.Method1()";
+            this.btnRemoteCamera1.Text = "Camera1.Method1()";
             this.btnRemoteCamera1.UseVisualStyleBackColor = true;
             this.btnRemoteCamera1.Click += new System.EventHandler(this.btnRemoteCamera1_Click);
             // 
@@ -224,8 +225,8 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.radioButton2);
-            this.panel1.Controls.Add(this.radioButton1);
+            this.panel1.Controls.Add(this.rbVideoRemote);
+            this.panel1.Controls.Add(this.rbVideoLocal);
             this.panel1.Controls.Add(this.btnAction);
             this.panel1.Controls.Add(this.cbLogicalVideoDevices);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -234,28 +235,27 @@
             this.panel1.Size = new System.Drawing.Size(746, 39);
             this.panel1.TabIndex = 0;
             // 
-            // radioButton2
+            // rbVideoRemote
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Enabled = false;
-            this.radioButton2.Location = new System.Drawing.Point(418, 10);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(83, 17);
-            this.radioButton2.TabIndex = 3;
-            this.radioButton2.Text = "Local HTTP";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbVideoRemote.AutoSize = true;
+            this.rbVideoRemote.Location = new System.Drawing.Point(418, 10);
+            this.rbVideoRemote.Name = "rbVideoRemote";
+            this.rbVideoRemote.Size = new System.Drawing.Size(83, 17);
+            this.rbVideoRemote.TabIndex = 3;
+            this.rbVideoRemote.Text = "Local HTTP";
+            this.rbVideoRemote.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // rbVideoLocal
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(364, 10);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(51, 17);
-            this.radioButton1.TabIndex = 2;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Local";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rbVideoLocal.AutoSize = true;
+            this.rbVideoLocal.Checked = true;
+            this.rbVideoLocal.Location = new System.Drawing.Point(364, 10);
+            this.rbVideoLocal.Name = "rbVideoLocal";
+            this.rbVideoLocal.Size = new System.Drawing.Size(51, 17);
+            this.rbVideoLocal.TabIndex = 2;
+            this.rbVideoLocal.TabStop = true;
+            this.rbVideoLocal.Text = "Local";
+            this.rbVideoLocal.UseVisualStyleBackColor = true;
             // 
             // btnAction
             // 
@@ -343,6 +343,7 @@
             this.btnDomeDisconnect.TabIndex = 2;
             this.btnDomeDisconnect.Text = "Disconnect";
             this.btnDomeDisconnect.UseVisualStyleBackColor = true;
+
             // 
             // frmMain
             // 
@@ -359,10 +360,10 @@
             this.tabVideo.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picboxVideo)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.tabDome.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -387,8 +388,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox cbLogicalVideoDevices;
         private System.Windows.Forms.Button btnAction;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton rbVideoRemote;
+        private System.Windows.Forms.RadioButton rbVideoLocal;
         protected internal System.Windows.Forms.PictureBox picboxVideo;
         private System.Windows.Forms.TabPage tabDome;
         private System.Windows.Forms.Panel panel4;

@@ -43,5 +43,17 @@ namespace Horus.Model.Helpers
             return outXmlStr.ToString();
         }
 
+        public static string AsSerialized<TBaseClass>(this object obj)
+        {
+            var ser = new XmlSerializer(typeof(TBaseClass));
+            var outXmlStr = new StringBuilder();
+            using (TextWriter writer = new StringWriter(outXmlStr))
+            {
+                ser.Serialize(writer, obj);
+            }
+
+            return outXmlStr.ToString();
+        }
+
     }
 }

@@ -60,7 +60,9 @@
     <Compile Include="Interfaces\IVideo.cs" />
     <Compile Include="Interfaces\IVideoFrame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server\HorusDriverSummaryList.cs" />
+    <Compile Include="Server\HorusDriverInstanceSummary.cs" />
+    <Compile Include="Server\HorusLogicalDeviceSummaryList.cs" />
+    <Compile Include="Server\MethodCallParametersList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

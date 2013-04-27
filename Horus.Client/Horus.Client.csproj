@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -49,13 +50,18 @@
     <Compile Include="Drivers\HorusDriver.cs" />
     <Compile Include="Drivers\HorusVideo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Remote\Envelops\VideoFrameEnvelop.cs" />
+    <Compile Include="Remote\RemoteCamera.cs" />
+    <Compile Include="Remote\RemoteVideo.cs" />
     <Compile Include="System\AppDomains\DriverAppDomainManager.cs" />
     <Compile Include="System\ASCOMDriversDiscoveryService.cs" />
     <Compile Include="System\HorusContext.cs" />
     <Compile Include="System\HorusSession.cs" />
     <Compile Include="System\LocalHorusDriver.cs" />
     <Compile Include="System\LocalHorusSession.cs" />
-    <Compile Include="System\NativeHorusDriversDriscoveryService.cs" />
+    <Compile Include="System\NativeHorusDriversDiscoveryService.cs" />
+    <Compile Include="System\Persisters\ModelPersister.cs" />
+    <Compile Include="System\Persisters\VideoFramePersister.cs" />
     <Compile Include="System\RemoteHorusSession.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -78,7 +78,8 @@ namespace HorusClientApp
 
             var remoteSession = HorusSession.CreateRemoteSession(new Uri(tbxEndpointV1.Text), tbxUser.Text, tbxPassword.Text);
 
-            HorusDeviceSummary deviceSummary = remoteSession.EnumDevices<ICamera>().First(x => x.DeviceName == "DummyCamera1Device");
+            List<HorusDeviceSummary> devices = remoteSession.EnumDevices<ICamera>();
+            HorusDeviceSummary deviceSummary = devices.First(x => x.DeviceName == "DummyCamera1Device");
 
             HorusCamera camera = remoteSession.CreateCameraInstance(deviceSummary);
 
@@ -86,14 +87,23 @@ namespace HorusClientApp
         }
 
 
-	    private HorusSession localDomeSession;
+	    private HorusSession videoTestSession;
+		private HorusSession localDomeSession;
 
-	    private void btnAction_Click(object sender, EventArgs e)
+
+        private void btnAction_Click(object sender, EventArgs e)
         {
-            if (localDomeSession == null)
+            if (videoTestSession == null)
             {
-                localDomeSession = HorusSession.CreateLocalSession();
-                List<HorusDeviceSummary> logicalDevices = localDomeSession.EnumDevices<IVideo>();
+                bool isRemote = rbVideoRemote.Checked;
+                rbVideoRemote.Enabled = false;
+                rbVideoLocal.Enabled = false;
+
+                videoTestSession = isRemote 
+                    ? HorusSession.CreateRemoteSession(new Uri(tbxEndpointV1.Text), tbxUser.Text, tbxPassword.Text) 
+                    : HorusSession.CreateLocalSession();
+
+                List<HorusDeviceSummary> logicalDevices = videoTestSession.EnumDevices<IVideo>();
 
                 cbLogicalVideoDevices.Items.Clear();
                 foreach(HorusDeviceSummary device in logicalDevices)
@@ -111,34 +121,49 @@ namespace HorusClientApp
                 var logicalDevice = cbLogicalVideoDevices.SelectedItem as LogicalDeviceModel;
                 if (logicalDevice != null)
                 {
-                    HorusVideo video = localDomeSession.CreateVideoInstance(logicalDevice.DeviceSummary);
+                    HorusVideo video = videoTestSession.CreateVideoInstance(logicalDevice.DeviceSummary);
                     videoController.PlayVideo(video);
                 }
             }
         }
 
-        private void btnDomeAction_Click(object sender, EventArgs e)
+        private void btnRemoteCamera2_Click(object sender, EventArgs e)
         {
-            if (localDomeSession == null)
-            {
-                localDomeSession = HorusSession.CreateLocalSession();
-                List<HorusDeviceSummary> logicalDevices = localDomeSession.EnumDevices<IDome>();
+            // NOTE: In a real client application the session and driver instantiation will be managed at a different scope.
+            //       This is just a quick example and includes all objects that need to be created and all methods that need to be called 
+            //       during the lifetime of the realworld app in order to make a method call on a driver interface
 
-                cbLogicalDomeDevices.Items.Clear();
-                foreach (HorusDeviceSummary device in logicalDevices)
-                {
-                    cbLogicalDomeDevices.Items.Add(new LogicalDeviceModel(device));
-                }
+            var remoteSession = HorusSession.CreateRemoteSession(new Uri(tbxEndpointV1.Text), tbxUser.Text, tbxPassword.Text);
 
-                if (cbLogicalDomeDevices.Items.Count > 0)
-                {
-                    cbLogicalDomeDevices.SelectedIndex = 0;
-                btnDomeConnect.Enabled = true;
-                btnDomeDisconnect.Enabled = false;
-                }
+            List<HorusDeviceSummary> devices = remoteSession.EnumDevices<ICamera>();
+            HorusDeviceSummary deviceSummary = devices.First(x => x.DeviceName == "DummyCamera2Device");
+
+            HorusCamera camera = remoteSession.CreateCameraInstance(deviceSummary);
+
+            MessageBox.Show(camera.Method1(0));
         }
 
-	}
+	    void btnDomeAction_Click(object sender, EventArgs e)
+	        {
+	        if (localDomeSession == null)
+	            {
+	            localDomeSession = HorusSession.CreateLocalSession();
+	            List<HorusDeviceSummary> logicalDevices = localDomeSession.EnumDevices<IDome>();
+
+	            cbLogicalDomeDevices.Items.Clear();
+	            foreach (HorusDeviceSummary device in logicalDevices)
+	                {
+	                cbLogicalDomeDevices.Items.Add(new LogicalDeviceModel(device));
+	                }
+
+	            if (cbLogicalDomeDevices.Items.Count > 0)
+	                {
+	                cbLogicalDomeDevices.SelectedIndex = 0;
+	                btnDomeConnect.Enabled = true;
+	                btnDomeDisconnect.Enabled = false;
+	                }
+	            }
+	        }
 
 	    void btnDomeConnect_Click(object sender, EventArgs e)
 	        {
