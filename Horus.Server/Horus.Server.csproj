@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Horus.Server</RootNamespace>
     <AssemblyName>Horus.Server</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -33,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Kayak, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -84,19 +86,19 @@
     <None Include="uninstall.bat" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Horus.Client\Horus.Client.csproj">
-      <Project>{ECC64F7D-CB49-4865-BA8E-E3E6A2B0082D}</Project>
-      <Name>Horus.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Horus.Model\Horus.Model.csproj">
-      <Project>{C8FA1899-1BEB-454F-A30D-21341AC5B52B}</Project>
-      <Name>Horus.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Horus.Client\Horus.Client.csproj">
+      <Project>{ecc64f7d-cb49-4865-ba8e-e3e6a2b0082d}</Project>
+      <Name>Horus.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Horus.Model\Horus.Model.csproj">
+      <Project>{c8fa1899-1beb-454f-a30d-21341ac5b52b}</Project>
+      <Name>Horus.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
