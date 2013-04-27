@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Horus.Model.Exceptions;
 
@@ -10,7 +11,7 @@ namespace Horus.Model.Interfaces
     /// <summary>
     /// Defines the IDome Interface
     /// </summary>
-    public interface IDomeV2 : IHorusDriver
+    public interface IDome : IHorusDriver
         {
         //CCDA0D85-474A-4775-8105-1D513ADC3896
 
@@ -138,7 +139,7 @@ namespace Horus.Model.Interfaces
         /// the ArrayList is the correct implementation to use as the .NET Generic methods are not compatible with COM.</para>
         /// </remarks>
 
-        ArrayList SupportedActions { get; }
+        IList<string> SupportedActions { get; }
         /// <summary>
         /// Transmits an arbitrary string to the device and does not wait for a response.
         /// Optionally, protocol framing characters may be added to the string before transmission.

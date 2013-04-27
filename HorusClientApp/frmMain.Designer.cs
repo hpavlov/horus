@@ -34,9 +34,16 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.picboxVideo = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.rbVideoRemote = new System.Windows.Forms.RadioButton();
-            this.rbVideoLocal = new System.Windows.Forms.RadioButton();
             this.btnAction = new System.Windows.Forms.Button();
+            this.rbVideoLocal = new System.Windows.Forms.RadioButton();
+			this.rbVideoRemote = new System.Windows.Forms.RadioButton();
+            this.tabDome = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnDomeAction = new System.Windows.Forms.Button();
+            this.btnDomeConnect = new System.Windows.Forms.Button();
+            this.btnDomeDisconnect = new System.Windows.Forms.Button();
+            this.cbLogicalDomeDevices = new System.Windows.Forms.ComboBox();
             this.cbLogicalVideoDevices = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -45,6 +52,8 @@
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxVideo)).BeginInit();
             this.panel1.SuspendLayout();
+            this.tabDome.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLocalCamera1
@@ -75,6 +84,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabVideo);
+            this.tabControl1.Controls.Add(this.tabDome);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -265,6 +275,76 @@
             this.cbLogicalVideoDevices.Size = new System.Drawing.Size(240, 21);
             this.cbLogicalVideoDevices.TabIndex = 0;
             // 
+            // tabDome
+            // 
+            this.tabDome.Controls.Add(this.panel4);
+            this.tabDome.Controls.Add(this.panel3);
+            this.tabDome.Location = new System.Drawing.Point(4, 22);
+            this.tabDome.Name = "tabDome";
+            this.tabDome.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDome.Size = new System.Drawing.Size(752, 512);
+            this.tabDome.TabIndex = 3;
+            this.tabDome.Text = "Dome Client";
+            this.tabDome.UseVisualStyleBackColor = true;
+            // 
+            // panel4
+            // 
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 62);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(746, 447);
+            this.panel4.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.btnDomeDisconnect);
+            this.panel3.Controls.Add(this.btnDomeConnect);
+            this.panel3.Controls.Add(this.cbLogicalDomeDevices);
+            this.panel3.Controls.Add(this.btnDomeAction);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(3, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(746, 59);
+            this.panel3.TabIndex = 0;
+            // 
+            // btnDomeAction
+            // 
+            this.btnDomeAction.Location = new System.Drawing.Point(14, 15);
+            this.btnDomeAction.Name = "btnDomeAction";
+            this.btnDomeAction.Size = new System.Drawing.Size(122, 23);
+            this.btnDomeAction.TabIndex = 0;
+            this.btnDomeAction.Text = "Select Dome";
+            this.btnDomeAction.UseVisualStyleBackColor = true;
+            this.btnDomeAction.Click += new System.EventHandler(this.btnDomeAction_Click);
+            // 
+            // cbLogicalDomeDevices
+            // 
+            this.cbLogicalDomeDevices.FormattingEnabled = true;
+            this.cbLogicalDomeDevices.Location = new System.Drawing.Point(143, 16);
+            this.cbLogicalDomeDevices.Name = "cbLogicalDomeDevices";
+            this.cbLogicalDomeDevices.Size = new System.Drawing.Size(290, 21);
+            this.cbLogicalDomeDevices.TabIndex = 1;
+            // 
+            // btnDomeConnect
+            // 
+            this.btnDomeConnect.Location = new System.Drawing.Point(487, 14);
+            this.btnDomeConnect.Name = "btnDomeConnect";
+            this.btnDomeConnect.Size = new System.Drawing.Size(75, 23);
+            this.btnDomeConnect.TabIndex = 2;
+            this.btnDomeConnect.Text = "Connect";
+            this.btnDomeConnect.UseVisualStyleBackColor = true;
+            this.btnDomeConnect.Click += new System.EventHandler(this.btnDomeConnect_Click);
+            // 
+            // btnDomeDisconnect
+            // 
+            this.btnDomeDisconnect.Location = new System.Drawing.Point(578, 14);
+            this.btnDomeDisconnect.Name = "btnDomeDisconnect";
+            this.btnDomeDisconnect.Size = new System.Drawing.Size(75, 23);
+            this.btnDomeDisconnect.TabIndex = 2;
+            this.btnDomeDisconnect.Text = "Disconnect";
+            this.btnDomeDisconnect.UseVisualStyleBackColor = true;
+
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -280,6 +360,8 @@
             this.tabVideo.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picboxVideo)).EndInit();
+            this.tabDome.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -309,6 +391,13 @@
         private System.Windows.Forms.RadioButton rbVideoRemote;
         private System.Windows.Forms.RadioButton rbVideoLocal;
         protected internal System.Windows.Forms.PictureBox picboxVideo;
+        private System.Windows.Forms.TabPage tabDome;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button btnDomeAction;
+        private System.Windows.Forms.ComboBox cbLogicalDomeDevices;
+        private System.Windows.Forms.Button btnDomeDisconnect;
+        private System.Windows.Forms.Button btnDomeConnect;
 	}
 }
 

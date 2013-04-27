@@ -236,5 +236,8 @@ namespace Horus.Client.System
                 .Exists(y => string.Equals(y, typeof (TSupportedInterface).FullName, StringComparison.InvariantCultureIgnoreCase)))
                 .ToList();
         }
+		
+		public override HorusDome CreateDomeInstance(HorusDeviceSummary deviceSummary) { throw new NotImplementedException(); }
+
     }
 }

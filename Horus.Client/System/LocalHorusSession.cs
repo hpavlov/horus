@@ -9,7 +9,7 @@ using Horus.Model.Drivers;
 using Horus.Model.Interfaces;
 
 namespace Horus.Client.System
-{
+    {
     // NOTE: This implementation is pretty naive and requires serious thought and further work
     internal class LocalHorusSession : HorusSession
     {
@@ -35,16 +35,16 @@ namespace Horus.Client.System
 
             object newInstance = Activator.CreateInstance(localDriver.Implementor);
             return newInstance as TInterface;
-        }
+            }
 
         public override HorusDriverSummary[] EnumDrivers()
-        {
+            {
             EnsureLocalDrivers();
 
             var rv = new List<HorusDriverSummary>();
 
             foreach (LocalHorusDriver localDriver in allLocalDrivers)
-            {
+                {
                 // NOTE: This is a rather simple implementation
                 Type[] implementedHorusInterfaces = localDriver.Implementor.FindInterfaces((type, criteria) => typeof (IHorusDriver).IsAssignableFrom(type), null);
                 rv.Add(new HorusDriverSummary()
@@ -56,54 +56,54 @@ namespace Horus.Client.System
             }
 
             return rv.ToArray();
-        }
+            }
 
-        public override HorusDriverSummary[] EnumSimulators()
-        {
-            throw new NotImplementedException();
-        }
+        public override HorusDriverSummary[] EnumSimulators() { throw new NotImplementedException(); }
 
         public override HorusDriver CreateDriverInstance(HorusDriverSummary driverSummary)
-        {
+            {
             EnsureLocalDrivers();
 
-            LocalHorusDriver localDriver =  allLocalDrivers.SingleOrDefault(x => x.Implementor.FullName == driverSummary.DriverName);
+            LocalHorusDriver localDriver =
+                allLocalDrivers.SingleOrDefault(x => x.Implementor.FullName == driverSummary.DriverName);
 
             if (localDriver != null)
-            {
+                {
                 IHorusDriver driverInterfaceInstance = CreateDriverInstance<IHorusDriver>(localDriver);
                 driverInterfaceInstance.Initialize(new HorusContext(this));
                 return new HorusDriver(driverInterfaceInstance);
-            }
+                }
 
             return null;
-        }
+            }
 
         public override HorusCamera CreateCameraInstance(HorusDeviceSummary deviceSummary)
-        {
+            {
             EnsureLocalDrivers();
 
-            LocalHorusDriver localDriver = allLocalDrivers.SingleOrDefault(x => x.Implementor.FullName == deviceSummary.DeviceDriver.DriverName);
+            LocalHorusDriver localDriver =
+                allLocalDrivers.SingleOrDefault(x => x.Implementor.FullName == deviceSummary.DeviceDriver.DriverName);
 
             if (localDriver != null)
-            {
+                {
                 IHorusDriver driverInterfaceInstance = CreateDriverInstance<IHorusDriver>(localDriver);
                 driverInterfaceInstance.Initialize(new HorusContext(this));
                 driverInterfaceInstance.LinkToDevice(deviceSummary.DeviceName);
                 return new HorusCamera(driverInterfaceInstance);
-            }
+                }
 
             return null;
-        }
+            }
 
         public override HorusVideo CreateVideoInstance(HorusDeviceSummary deviceSummary)
-        {
+            {
             EnsureLocalDrivers();
 
-            LocalHorusDriver localDriver = allLocalDrivers.SingleOrDefault(x => x.Implementor.FullName == deviceSummary.DeviceDriver.DriverName);
+            LocalHorusDriver localDriver =
+                allLocalDrivers.SingleOrDefault(x => x.Implementor.FullName == deviceSummary.DeviceDriver.DriverName);
 
             if (localDriver != null)
-            {
+                {
                 IHorusDriver driverInterfaceInstance = CreateDriverInstance<IHorusDriver>(localDriver);
                 driverInterfaceInstance.Initialize(new HorusContext(this));
                 driverInterfaceInstance.LinkToDevice(deviceSummary.DeviceName);                
@@ -162,5 +162,21 @@ namespace Horus.Client.System
 
             return GetLogicalDevicesForDrivers(drivers);
         }
+		
+		public override HorusDome CreateDomeInstance(HorusDeviceSummary deviceSummary)
+            {
+            EnsureLocalDrivers();
+            LocalHorusDriver localDriver =
+                allLocalDrivers.SingleOrDefault(x => x.Implementor.FullName == deviceSummary.DeviceDriver.DriverName);
+            if (localDriver != null)
+                {
+                IHorusDriver driverInterfaceInstance = CreateDriverInstance<IHorusDriver>(localDriver);
+                driverInterfaceInstance.Initialize(new HorusContext(this));
+                driverInterfaceInstance.LinkToDevice(deviceSummary.DeviceName);
+                return new HorusDome(driverInterfaceInstance);
+                }
+            return null;
+            }
+
     }
 }
