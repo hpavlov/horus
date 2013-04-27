@@ -88,5 +88,7 @@ namespace Horus.Client.System
         {
             throw new NotImplementedException();
         }
+
+        public override HorusDome CreateDomeInstance(HorusDeviceSummary deviceSummary) { throw new NotImplementedException(); }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Horus.Client.Drivers;
 
@@ -8,7 +9,7 @@ namespace HorusClientApp.Controllers
         {
         frmMain mainForm;
         bool running = false;
-        HorusDome domeObject;
+        HorusDome dome;
 
         public DomeController(frmMain mainForm) { this.mainForm = mainForm; }
 
@@ -17,9 +18,9 @@ namespace HorusClientApp.Controllers
             try
                 {
                 mainForm.Cursor = Cursors.WaitCursor;
-                domeObject.Connected = true;
+                dome.Connected = true;
 
-                if (domeObject.IsConnected) {}
+                if (dome.IsConnected) {}
                 }
             finally
                 {
@@ -29,14 +30,35 @@ namespace HorusClientApp.Controllers
 
         public void DisconnectFromDevice()
             {
-            if (domeObject != null)
+            if (dome != null)
                 {
-                domeObject.Connected = false;
-                domeObject = null;
+                dome.Connected = false;
+                dome = null;
                 }
+            mainForm.SetDomeUiStateChoosing();
             }
 
         static Font debugTextFont = new Font(FontFamily.GenericMonospace, 10);
 
+        public void ConnectToDevice(HorusDome domeInstance)
+            {
+            dome = domeInstance;
+            try
+                {
+                dome.Connected = true;
+                if (dome.Connected)
+                    {
+                    mainForm.SetDomeUiStateConnected();
+                    }
+                else
+                    {
+                    mainForm.SetDomeUiStateChooseOrConnect();
+                    }
+                }
+            catch (Exception ex)
+                {
+                mainForm.SetDomeUiStateChoosing();
+                }
+            }
         }
     }

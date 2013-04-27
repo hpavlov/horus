@@ -18,12 +18,14 @@ namespace HorusClientApp
 	public partial class frmMain : Form
 	{
 	    private VideoController videoController;
+	    private DomeController domeController;
 
 		public frmMain()
 		{
 			InitializeComponent();
 
 		    videoController = new VideoController(this);
+		    domeController = new DomeController(this);
 		}
 
         /// <summary>
@@ -84,14 +86,14 @@ namespace HorusClientApp
         }
 
 
-	    private HorusSession localVideoTestSession;
+	    private HorusSession localDomeSession;
 
-        private void btnAction_Click(object sender, EventArgs e)
+	    private void btnAction_Click(object sender, EventArgs e)
         {
-            if (localVideoTestSession == null)
+            if (localDomeSession == null)
             {
-                localVideoTestSession = HorusSession.CreateLocalSession();
-                List<HorusDeviceSummary> logicalDevices = localVideoTestSession.EnumDevices<IVideo>();
+                localDomeSession = HorusSession.CreateLocalSession();
+                List<HorusDeviceSummary> logicalDevices = localDomeSession.EnumDevices<IVideo>();
 
                 cbLogicalVideoDevices.Items.Clear();
                 foreach(HorusDeviceSummary device in logicalDevices)
@@ -109,10 +111,72 @@ namespace HorusClientApp
                 var logicalDevice = cbLogicalVideoDevices.SelectedItem as LogicalDeviceModel;
                 if (logicalDevice != null)
                 {
-                    HorusVideo video = localVideoTestSession.CreateVideoInstance(logicalDevice.DeviceSummary);
+                    HorusVideo video = localDomeSession.CreateVideoInstance(logicalDevice.DeviceSummary);
                     videoController.PlayVideo(video);
                 }
             }
+        }
+
+        private void btnDomeAction_Click(object sender, EventArgs e)
+        {
+            if (localDomeSession == null)
+            {
+                localDomeSession = HorusSession.CreateLocalSession();
+                List<HorusDeviceSummary> logicalDevices = localDomeSession.EnumDevices<IDome>();
+
+                cbLogicalDomeDevices.Items.Clear();
+                foreach (HorusDeviceSummary device in logicalDevices)
+                {
+                    cbLogicalDomeDevices.Items.Add(new LogicalDeviceModel(device));
+                }
+
+                if (cbLogicalDomeDevices.Items.Count > 0)
+                {
+                    cbLogicalDomeDevices.SelectedIndex = 0;
+                btnDomeConnect.Enabled = true;
+                btnDomeDisconnect.Enabled = false;
+                }
+        }
+
+	}
+
+	    void btnDomeConnect_Click(object sender, EventArgs e)
+	        {
+	        var logicalDevice = cbLogicalDomeDevices.SelectedItem as LogicalDeviceModel;
+	        if (logicalDevice != null)
+	            {
+	            HorusDome dome = localDomeSession.CreateDomeInstance(logicalDevice.DeviceSummary);
+	            domeController.ConnectToDevice(dome);
+	            }
+	        }
+
+	    void SetDomeUiStateAllDisabled()
+	        {
+	        btnDomeAction.Enabled = false;
+	        cbLogicalDomeDevices.Enabled = false;
+	        btnDomeConnect.Enabled = false;
+	        btnDomeDisconnect.Enabled = false;
+	        }
+
+	    internal void SetDomeUiStateChoosing()
+	        {
+            SetDomeUiStateAllDisabled();
+	        btnDomeAction.Enabled = true;
+	        cbLogicalDomeDevices.Enabled = true;
+	        }
+
+	    internal void SetDomeUiStateChooseOrConnect()
+        {
+            SetDomeUiStateAllDisabled();
+            btnDomeAction.Enabled = true;
+            cbLogicalDomeDevices.Enabled = true;
+            btnDomeConnect.Enabled = true;
+        }
+
+	    internal void SetDomeUiStateConnected()
+        {
+            SetDomeUiStateAllDisabled();
+            btnDomeDisconnect.Enabled = true;
         }
 
 	}

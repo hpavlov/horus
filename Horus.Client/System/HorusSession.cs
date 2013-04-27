@@ -29,9 +29,13 @@ namespace Horus.Client.System
         
         // NOTE: To deal with changing interface version at client side in .NET applcation we use abstract classes (such as HorusCamera)
         //       When a new driver interface becomes available and supported by the platform, the new methods will ne added to this HorusSession class
+        // ToDo: [TPL] Can we use a generic abstract method here rather than an abstract method for each type of driver?
+        //         public abstract THorusDriver CreateDriverInstance<THorusDriver>(HorusDriverSummary driverSummary);
+
         public abstract HorusDriver CreateDriverInstance(HorusDriverSummary driverSummary);
         public abstract HorusCamera CreateCameraInstance(HorusDeviceSummary deviceSummary);
         public abstract HorusVideo CreateVideoInstance(HorusDeviceSummary deviceSummary);
+        public abstract HorusDome CreateDomeInstance(HorusDeviceSummary deviceSummary);
 
         private void EnsureAvailableDrivers()
         {
