@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Horus Driver Toolkit</id>
     <version>0.0.0</version>
@@ -20,17 +20,12 @@
       <frameworkAssembly assemblyName="System.Core" targetFramework="net45" />
       <frameworkAssembly assemblyName="System.Xml" targetFramework="net45" />
     </frameworkAssemblies>
+    <dependencies>
+      <dependency id="TiGra.Diagnostics" />
+    </dependencies>
   </metadata>
   <files>
     <file src="Horus.Model\bin\Release\*.*" target="lib\net45" />
     <file src="Horus.Config\bin\Release\*.*" target="lib\net45" />
   </files>
-  <dependencies>
-    <group targetFramework="net45">
-      <dependency id="TiGra.Diagnostics" />
-    </group>
-    <group targetFramework="net35">
-      <dependency id="TiGra.Diagnostics" />
-    </group>
-  </dependencies>
 </package>
