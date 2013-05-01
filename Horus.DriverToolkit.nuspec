@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>Horus Driver Toolkit</id>
+    <id>Horus.DriverToolkit</id>
     <version>0.0.0</version>
     <title>Horus device driver development kit</title>
     <authors>The Horus Project</authors>
