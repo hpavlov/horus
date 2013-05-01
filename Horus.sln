@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AE067F57-8FCC-43B1-9FFB-537DCE6EFADB}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		HorusDriverSdk.nuspec = HorusDriverSdk.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BE3E89E8-C76A-496F-8A92-3BC3CEB5E698}"
@@ -26,8 +27,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horus.Configurator", "Horus.Configuration\Horus.Configurator.csproj", "{CAE4878C-610B-4A86-95F6-E81E82435331}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horus.Config", "Horus.Config\Horus.Config.csproj", "{854F0B23-EEB8-49B8-9218-B0E86CA132D4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horus.Shared", "Horus.Shared\Horus.Shared.csproj", "{5A6298E0-D64F-46C5-9980-396CD5B56A0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,18 +119,6 @@ Global
 		{854F0B23-EEB8-49B8-9218-B0E86CA132D4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{854F0B23-EEB8-49B8-9218-B0E86CA132D4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{854F0B23-EEB8-49B8-9218-B0E86CA132D4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.CodeAnalysis|Any CPU.ActiveCfg = Release|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.CodeAnalysis|Any CPU.Build.0 = Release|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.CodeAnalysis|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.CodeAnalysis|Mixed Platforms.Build.0 = Release|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{5A6298E0-D64F-46C5-9980-396CD5B56A0F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

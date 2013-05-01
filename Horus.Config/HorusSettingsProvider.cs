@@ -17,7 +17,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using TiGra;
 
-namespace Horus.Configuration
+namespace Horus.Config
 {
     public class HorusSettingsProvider : SettingsProvider
     {
