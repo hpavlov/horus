@@ -7,7 +7,6 @@ using System.Linq;
 using System.Net;
 using System.ServiceProcess;
 using System.Text;
-using Horus.Server.Helpers;
 using Kayak;
 using Kayak.Framework;
 
@@ -24,7 +23,7 @@ namespace Horus.Server
 
         protected override void OnStart(string[] args)
         {
-            server = new KayakServer();
+			server = new KayakServer();
 
             server.UseFramework();
 

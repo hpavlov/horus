@@ -36,4 +36,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: InternalsVisibleTo("Horus.Configurator")]
-[assembly: InternalsVisibleTo("Horus.Server")]
+[assembly: InternalsVisibleTo("Horus.WebServices")]

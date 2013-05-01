@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using Horus.Model.Server;
 
-namespace Horus.Server.Helpers
+namespace Horus.ebServices.Helpers
 {
     public static class DeviceInterfaceCaller
     {
