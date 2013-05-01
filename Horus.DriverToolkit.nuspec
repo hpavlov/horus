@@ -25,7 +25,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="Horus.Model\bin\Release\*.*" target="lib\net45" />
     <file src="Horus.Config\bin\Release\*.*" target="lib\net45" />
   </files>
 </package>
