@@ -41,6 +41,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="TiGra.Diagnostics">
       <HintPath>..\packages\TiGra.Diagnostics.1.1.56\lib\net45\TiGra.Diagnostics.dll</HintPath>
     </Reference>
@@ -48,6 +49,7 @@
   <ItemGroup>
     <Compile Include="ConfigurationPersisters\FileSystemPersister.cs" />
     <Compile Include="ConfigurationPersisters\IConfigurationPersister.cs" />
+    <Compile Include="ConfigurationPersisters\InstanceAwareAppSettingsPersister.cs" />
     <Compile Include="ConfigurationPersisters\UserApplicationSettingsPersister.cs" />
     <Compile Include="HorusConfigManager.cs" />
     <Compile Include="HorusSettingsProvider.cs" />

@@ -19,6 +19,8 @@
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="net45" />
       <frameworkAssembly assemblyName="System.Core" targetFramework="net45" />
       <frameworkAssembly assemblyName="System.Xml" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.IO" targetFramework="net45" />
     </frameworkAssemblies>
     <dependencies>
       <dependency id="TiGra.Diagnostics" />
