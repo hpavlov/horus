@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Horus.DriverToolkit</id>
+    <version>0.0.0</version>
+    <title>Horus device driver development kit</title>
+    <authors>The Horus Project</authors>
+    <owners>The Horus Project</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Provides device interface definitions, configuration management and related items for Horus driver projects.</description>
+    <releaseNotes></releaseNotes>
+    <language>en-UK</language>
+    <copyright>Copyright © 2013 The Horus Project, all rights reserved</copyright>
+    <tags>Horus astronomy driver developer sdk kit</tags>
+    <projectUrl>http://horus.azurewebsites.net</projectUrl>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.IO" targetFramework="net45" />
+    </frameworkAssemblies>
+    <dependencies>
+      <dependency id="TiGra.Diagnostics" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Horus.Config\bin\Release\Horus.Config.*" target="lib\net45" />
+    <file src="Horus.Config\bin\Release\Horus.Model.*" target="lib\net45" />
+  </files>
+</package>
